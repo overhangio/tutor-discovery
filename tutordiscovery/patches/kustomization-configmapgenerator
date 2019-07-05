@@ -1,0 +1,3 @@
+- name: discovery-settings
+  files:
+    - plugins/discovery/apps/settings/tutor.py

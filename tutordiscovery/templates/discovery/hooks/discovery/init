@@ -1,0 +1,16 @@
+export DJANGO_SETTINGS_MODULE=course_discovery.settings.tutor
+
+make migrate
+
+# Note that we will need to add a --ecommerce-api-url parameter here
+./manage.py create_or_update_partner  \
+  --site-id 1 \
+  --site-domain {{ LMS_HOST }} \
+  --code openedx --name openedx \
+  --courses-api-url "http://lms:8000/api/courses/v1/" \
+  --oidc-url-root "http://lms:8000/oauth2" \
+  --oidc-key "{{ DISCOVERY_OAUTH2_KEY }}" \
+  --oidc-secret "{{ DISCOVERY_OAUTH2_SECRET }}"
+
+./manage.py refresh_course_metadata
+./manage.py update_index --disable-change-limit

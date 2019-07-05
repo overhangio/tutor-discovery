@@ -1,0 +1,2 @@
+ELASTICSEARCH_URL: "http://elasticsearch:9200"
+ELASTICSEARCH_INDEX_NAME: "catalog"

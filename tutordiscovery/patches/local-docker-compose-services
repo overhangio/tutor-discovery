@@ -1,0 +1,18 @@
+discovery:
+  image: {{ DOCKER_REGISTRY }}{{ DISCOVERY_DOCKER_IMAGE }}
+  environment:
+    DJANGO_SETTINGS_MODULE: course_discovery.settings.tutor
+  restart: unless-stopped
+  volumes:
+    - ../plugins/discovery/apps/settings/tutor.py:/openedx/discovery/course_discovery/settings/tutor.py:ro
+    - ../../data/discovery/media:/openedx/discovery/course_discovery/media
+  depends_on:
+    {% if ACTIVATE_LMS %}- lms{% endif %}
+    {% if ACTIVATE_MYSQL %}- mysql{% endif %}
+    {% if ACTIVATE_ELASTICSEARCH %}- elasticsearch{% endif %}
+
+discovery-assets:
+  image: {{ DOCKER_REGISTRY }}{{ DISCOVERY_DOCKER_IMAGE }}
+  volumes:
+    - ../../data/discovery:/var/www/discovery
+  command: sh -c "rm -rf /var/www/discovery/assets && cp -r /openedx/discovery/course_discovery/assets/ /var/www/discovery/"

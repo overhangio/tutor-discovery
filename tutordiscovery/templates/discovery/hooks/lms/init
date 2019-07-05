@@ -1,0 +1,11 @@
+./manage.py lms --settings=tutor.production manage_user discovery discovery@{{ LMS_HOST }} --staff --superuser
+
+./manage.py lms --settings=tutor.production create_oauth2_client \
+    "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}" \
+    "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}/complete/edx-oidc/" \
+    confidential \
+    --client_name discovery \
+    --client_id {{ DISCOVERY_OAUTH2_KEY }} \
+    --client_secret {{ DISCOVERY_OAUTH2_SECRET }} \
+    --username discovery \
+    --trusted
