@@ -2,6 +2,7 @@ build:image:
   script:
     - apk add --no-cache docker
     - python setup.py install
+    - tutor plugins enable discovery
     - tutor config save
     - tutor images build discovery
   only:
@@ -15,6 +16,7 @@ deploy:image:
   script:
     - apk add --no-cache docker
     - python setup.py install
+    - tutor plugins enable discovery
     - tutor config save
     - tutor images push discovery
   only:
