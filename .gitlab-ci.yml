@@ -1,4 +1,30 @@
-deploy:
+build:image:
+  script:
+    - apk add --no-cache docker
+    - python setup.py install
+    - tutor config save -I
+    - tutor images build discovery
+  only:
+    refs:
+      - master
+  tags:
+    - private
+  stage: build
+
+deploy:image:
+  script:
+    - apk add --no-cache docker
+    - python setup.py install
+    - tutor config save -I
+    - tutor images push discovery
+  only:
+    refs:
+      - master
+  tags:
+    - private
+  stage: deploy
+
+deploy:pypi:
   script:
     - apk add --no-cache make
     - pip3 install -U setuptools twine
@@ -9,3 +35,4 @@ deploy:
       - master
   tags:
     - private
+  stage: deploy

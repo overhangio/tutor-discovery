@@ -7,6 +7,10 @@ here = os.path.abspath(os.path.dirname(__file__))
 with io.open(os.path.join(here, "README.rst"), "rt", encoding="utf8") as f:
     readme = f.read()
 
+about = {}
+with io.open(os.path.join(here, "tutordiscovery", "__about__.py"), "rt", encoding="utf-8") as f:
+    exec(f.read(), about)
+
 
 setup(
     name="tutor-discovery",
@@ -15,7 +19,7 @@ setup(
     project_urls={
         "Documentation": "https://docs.tutor.overhang.io/",
         "Code": "https://github.com/overhangio/tutor-discovery",
-        "Issue tracker": "https://github.com/overhangio/tutor/issues",
+        "Issue tracker": "https://github.com/overhangio/tutor-discovery/issues",
         "Community": "https://discuss.overhang.io",
     },
     license="AGPLv3",
