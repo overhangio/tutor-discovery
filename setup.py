@@ -14,7 +14,7 @@ with io.open(os.path.join(here, "tutordiscovery", "__about__.py"), "rt", encodin
 
 setup(
     name="tutor-discovery",
-    version="0.1.0",
+    version=about["__version__"],
     url="https://docs.tutor.overhang.io/",
     project_urls={
         "Documentation": "https://docs.tutor.overhang.io/",
