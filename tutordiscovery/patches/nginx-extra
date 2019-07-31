@@ -35,6 +35,6 @@ server {
   }
   
   location /static {
-    alias /var/www/ecommerce/assets/; 
+    alias /var/www/discovery/assets; 
   }
 }
