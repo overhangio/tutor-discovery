@@ -44,6 +44,8 @@ The discovery user interface will be available at http://discovery.localhost for
 
 Then, you must login with this user at http://discovery.localhost/admin.
 
+Alternatively, you can login with oauth2 using a pre-existing user created on the LMS/CMS by accessing http(s)://discovery.<your lms host>/login. To do so, the proper domain names must exist and point to the production server.
+
 Re-indexing courses
 ~~~~~~~~~~~~~~~~~~~
 
