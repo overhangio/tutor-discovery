@@ -15,4 +15,4 @@ discovery-assets:
   image: {{ DOCKER_REGISTRY }}{{ DISCOVERY_DOCKER_IMAGE }}
   volumes:
     - ../../data/discovery:/var/www/discovery
-  command: sh -c "rm -rf /var/www/discovery/assets/* && mkdir -p /var/www/discovery/assets && cp -r /openedx/discovery/course_discovery/assets/* /var/www/discovery/assets"
+  command: sh -c "rm -rf /var/www/discovery/assets/*  && cp -r /openedx/discovery/course_discovery/assets/* /var/www/discovery/assets"
