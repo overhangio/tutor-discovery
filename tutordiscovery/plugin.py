@@ -1,6 +1,8 @@
 from glob import glob
 import os
 
+from .__about__ import __version__
+
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 templates = os.path.join(HERE, "templates")
@@ -12,7 +14,8 @@ config = {
         "OAUTH2_SECRET": "{{ 8|random_string }}",
     },
     "defaults": {
-        "DOCKER_IMAGE": "overhangio/openedx-discovery:{{ TUTOR_VERSION }}",
+        "VERSION": __version__,
+        "DOCKER_IMAGE": "overhangio/openedx-discovery:{{ DISCOVERY_VERSION }}",
         "HOST": "discovery.{{ LMS_HOST }}",
         "INDEX_NAME": "catalog",
         "MYSQL_DATABASE": "discovery",
