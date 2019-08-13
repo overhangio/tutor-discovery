@@ -1,1 +1,1 @@
-- ../../data/discovery/assets:/var/www/discovery/assets:ro
+- ../../data/discovery:/var/www/discovery:ro
