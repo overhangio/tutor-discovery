@@ -20,7 +20,6 @@ config = {
         "INDEX_NAME": "catalog",
         "MYSQL_DATABASE": "discovery",
         "MYSQL_USERNAME": "discovery",
-        "MYSQL_USERNAME": "discovery",
         "OAUTH2_KEY": "discovery",
     },
 }
