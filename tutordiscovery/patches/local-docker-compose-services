@@ -7,8 +7,8 @@ discovery:
     - ../plugins/discovery/apps/settings/tutor.py:/openedx/discovery/course_discovery/settings/tutor.py:ro
     - ../../data/discovery/media:/openedx/discovery/course_discovery/media
   depends_on:
+    - mysql
     {% if ACTIVATE_LMS %}- lms{% endif %}
-    {% if ACTIVATE_MYSQL %}- mysql{% endif %}
     {% if ACTIVATE_ELASTICSEARCH %}- elasticsearch{% endif %}
 
 discovery-assets:

@@ -27,7 +27,7 @@ config = {
 hooks = {
     "build-image": {"discovery": "{{ DISCOVERY_DOCKER_IMAGE }}"},
     "remote-image": {"discovery": "{{ DISCOVERY_DOCKER_IMAGE }}"},
-    "init": ["mysql-client", "lms", "discovery"],
+    "init": ["mysql", "lms", "discovery"],
 }
 
 
