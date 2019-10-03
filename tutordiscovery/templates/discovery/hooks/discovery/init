@@ -18,7 +18,7 @@ make migrate
   # Production partner
   ./manage.py create_or_update_partner  \
     --site-id 2 \
-    --site-domain {% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }} \
+    --site-domain {{ DISCOVERY_HOST }} \
     --code openedx --name "Open edX" \
     --courses-api-url "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/api/courses/v1/" \
     --oidc-url-root "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/oauth2" \
