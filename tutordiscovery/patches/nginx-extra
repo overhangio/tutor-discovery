@@ -37,8 +37,4 @@ server {
   location /static {
     alias /var/www/discovery/assets; 
   }
-  
-  location /media {
-    alias /var/www/discovery/media; 
-  }
 }
