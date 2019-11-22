@@ -1,7 +1,13 @@
 from .production import *
 
 SECRET_KEY = "{{ DISCOVERY_SECRET_KEY }}"
-ALLOWED_HOSTS = ["localhost", "discovery.localhost", "{{ DISCOVERY_HOST }}"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "discovery.localhost",
+    "discovery",
+    "{{ DISCOVERY_HOST }}"
+]
+
 PLATFORM_NAME = "{{ PLATFORM_NAME }}"
 
 DATABASES = {
