@@ -30,7 +30,7 @@ deploy:image:
 deploy:pypi:
   script:
     - apk add --no-cache make
-    - pip3 install -U setuptools twine
+    - pip3 install setuptools==41.6.0 twine==2.0.0
     - python3 setup.py sdist
     - twine upload --skip-existing dist/tutor-discovery*.tar.gz
   only:
