@@ -1,1 +1,2 @@
 FEATURES["ENABLE_COURSE_DISCOVERY"] = True
+COURSE_CATALOG_API_URL = "http://discovery:8000/api/v1"
