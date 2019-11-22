@@ -53,3 +53,16 @@ Re-indexing courses
   
   tutor local run discovery ./manage.py refresh_course_metadata
   tutor local run discovery ./manage.py update_index --disable-change-limit
+
+Caching programs
+~~~~~~~~~~~~~~~~
+
+In order to cache programs in the LMS, you will need to manually create a catalog integration. This step should be performed just once::
+    
+    tutor local run lms ./manage.py lms create_catalog_integrations --enabled \
+        --internal_api_url=http://discovery:8000 \
+        --service_username=lms_catalog_service_user
+
+Then::
+    
+    tutor local run lms ./manage.py lms cache_programs
