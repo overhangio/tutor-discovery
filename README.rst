@@ -70,7 +70,9 @@ Debugging
 
 To debug the course discovery service, you are encouraged to mount the course-discovery repo from the host in the development container:
 
-    tutor dev run -v ~/projets/openedx/repos/course-discovery/:/openedx/discovery -p 8000:8000 discovery
+    tutor dev runserver -v ~/projets/openedx/repos/course-discovery/:/openedx/discovery discovery
+    
+You can then access the development server at http://localhost:8381. Feel free to add breakpoints (``import pdb; pdb.set_trace()``) anywhere in your source code to debug your application.
 
 License
 -------
