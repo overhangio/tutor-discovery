@@ -33,7 +33,7 @@ setup(
     python_requires=">=3.5",
     entry_points={"tutor.plugin.v0": ["discovery = tutordiscovery.plugin"]},
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "Operating System :: OS Independent",
