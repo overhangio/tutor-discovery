@@ -64,3 +64,10 @@ In order to cache programs in the LMS, you will need to manually create a catalo
 Then::
     
     tutor local run lms ./manage.py lms cache_programs
+
+Debugging
+---------
+
+To debug the course discovery service, you are encouraged to mount the course-discovery repo from the host in the development container:
+
+    tutor dev run -v ~/projets/openedx/repos/course-discovery/:/openedx/discovery -p 8000:8000 discovery
