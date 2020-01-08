@@ -71,3 +71,8 @@ Debugging
 To debug the course discovery service, you are encouraged to mount the course-discovery repo from the host in the development container:
 
     tutor dev run -v ~/projets/openedx/repos/course-discovery/:/openedx/discovery -p 8000:8000 discovery
+
+License
+-------
+
+This work is licensed under the terms of the `GNU Affero General Public License (AGPL) <https://github.com/overhangio/tutor/blob/master/LICENSE.txt>`_.
