@@ -12,9 +12,7 @@ This plugin was developed and open sourced to the community thanks to the genero
 Installation
 ------------
 
-This plugin requires tutor>=3.6.0. Also, you should have installed tutor from source, and not from a pre-compiled binary.
-
-::
+This plugin requires tutor>=3.6.0. If you have installed tutor from a pre-compiled binary, it already comes bundled with the discovery plugin. Otherwise::
   
     pip install tutor-discovery
 
