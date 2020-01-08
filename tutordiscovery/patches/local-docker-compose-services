@@ -1,10 +1,10 @@
 discovery:
   image: {{ DOCKER_REGISTRY }}{{ DISCOVERY_DOCKER_IMAGE }}
   environment:
-    DJANGO_SETTINGS_MODULE: course_discovery.settings.tutor
+    DJANGO_SETTINGS_MODULE: course_discovery.settings.tutor.production
   restart: unless-stopped
   volumes:
-    - ../plugins/discovery/apps/settings/tutor.py:/openedx/discovery/course_discovery/settings/tutor.py:ro
+    - ../plugins/discovery/apps/settings/tutor:/openedx/discovery/course_discovery/settings/tutor:ro
     - ../../data/discovery/media:/openedx/discovery/course_discovery/media
   depends_on:
     - mysql

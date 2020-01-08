@@ -1,5 +1,3 @@
-from .production import *
-
 SECRET_KEY = "{{ DISCOVERY_SECRET_KEY }}"
 ALLOWED_HOSTS = [
     "localhost",
@@ -78,5 +76,3 @@ EDX_DRF_EXTENSIONS = {
 }
 
 STATIC_ROOT = "/openedx/static"
-COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = True

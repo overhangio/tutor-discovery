@@ -1,0 +1,4 @@
+discovery:
+    environment:
+      DJANGO_SETTINGS_MODULE: course_discovery.settings.tutor.development
+    command: ./manage.py runserver 0.0.0.0:8000
