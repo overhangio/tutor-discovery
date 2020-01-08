@@ -1,7 +1,7 @@
 {% if ACTIVATE_HTTPS %}
 <VirtualHost *:80>
    ServerName {{ DISCOVERY_HOST }}
-   Redirect / https://discovery.{{ LMS_HOST }}/
+   Redirect / https://{{ DISCOVERY_HOST }}/
 </VirtualHost>
 
 <VirtualHost *:443>
