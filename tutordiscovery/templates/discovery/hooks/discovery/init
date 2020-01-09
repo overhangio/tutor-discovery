@@ -1,4 +1,4 @@
-export DJANGO_SETTINGS_MODULE=course_discovery.settings.tutor
+export DJANGO_SETTINGS_MODULE=course_discovery.settings.tutor.production
 
 make migrate
 
