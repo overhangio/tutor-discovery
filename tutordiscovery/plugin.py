@@ -21,6 +21,7 @@ config = {
         "MYSQL_DATABASE": "discovery",
         "MYSQL_USERNAME": "discovery",
         "OAUTH2_KEY": "discovery",
+        "OAUTH2_KEY_DEV": "discovery-dev",
     },
 }
 

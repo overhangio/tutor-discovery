@@ -3,6 +3,18 @@ export DJANGO_SETTINGS_MODULE=$SERVICE_VARIANT.envs.$SETTINGS
 ./manage.py lms manage_user discovery discovery@{{ LMS_HOST }} --staff --superuser
 ./manage.py lms manage_user lms_catalog_service_user lms_catalog_service_user@{{ LMS_HOST }}
 
+# Development client
+./manage.py lms create_oauth2_client \
+    "http://localhost:8381" \
+    "http://localhost:8381/complete/edx-oidc/" \
+    confidential \
+    --client_name discovery-dev \
+    --client_id {{ DISCOVERY_OAUTH2_KEY_DEV }} \
+    --client_secret {{ DISCOVERY_OAUTH2_SECRET }} \
+    --username discovery \
+    --trusted
+
+# Production client
 ./manage.py lms create_oauth2_client \
     "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}" \
     "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}/complete/edx-oidc/" \
