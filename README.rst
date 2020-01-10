@@ -74,6 +74,17 @@ To debug the course discovery service, you are encouraged to mount the course-di
     
 You can then access the development server at http://localhost:8381. Feel free to add breakpoints (``import pdb; pdb.set_trace()``) anywhere in your source code to debug your application.
 
+Alternatively, you may bind-mount a local course-discovery repository by adding the following to ``$(tutor config printroot)/env/dev/docker-compose.override.yml``::
+    
+    version: "3.7"
+    services:
+        discovery:
+            volumes:
+                - /path/to/course-discovery/:/openedx/course-discovery
+        discovery-assets:
+            volumes:
+                - /path/to/course-discovery/:/openedx/course-discovery
+
 License
 -------
 
