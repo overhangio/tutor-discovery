@@ -3,7 +3,7 @@ Course Discovery plugin for `Tutor <https://docs.tutor.overhang.io>`_
 
 This is a plugin for `Tutor <https://docs.tutor.overhang.io>`_ that integrates the `Course Discovery <https://github.com/edx/course-discovery/>`__ application in an Open edX platform. it is useful for integration with, for example, `Ecommerce <https://github.com/edx/ecommerce>`__ or an external course catalog.
 
-.. image:: https://overhang.io/images/clients/e-ducation.jpg
+.. image:: https://overhang.io/static/marketing/img/clients/e-ducation.jpg
     :alt: E-ducation
     :target: https://www.e-ducation.cn/
 
