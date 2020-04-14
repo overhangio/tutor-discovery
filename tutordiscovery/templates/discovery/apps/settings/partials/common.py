@@ -37,7 +37,12 @@ CACHES = {
     }
 }
 
-LANGUAGE_CODE = "{{ LANGUAGE_CODE }}"
+# Some openedx language codes are not standard, such as zh-cn
+LANGUAGE_CODE = {
+    "zh-cn": "zh-hans",
+    "zh-hk": "zh-hant",
+    "zh-tw": "zh-hant",
+}.get("{{ LANGUAGE_CODE }}", "{{ LANGUAGE_CODE }}")
 PARLER_DEFAULT_LANGUAGE_CODE = LANGUAGE_CODE
 PARLER_LANGUAGES[1][0]["code"] = LANGUAGE_CODE
 PARLER_LANGUAGES["default"]["fallbacks"] = [PARLER_DEFAULT_LANGUAGE_CODE]
