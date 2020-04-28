@@ -5,8 +5,10 @@ RUN apt update && \
   build-essential libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev
 ENV LC_ALL en_US.UTF-8
 
+ARG DISCOVERY_REPOSITORY=https://github.com/edx/course-discovery.git
+ARG DISCOVERY_VERSION=open-release/ironwood.2
 RUN mkdir -p /openedx/discovery && \
-    git clone https://github.com/edx/course-discovery.git --branch open-release/ironwood.2 --depth 1 /openedx/discovery
+    git clone $DISCOVERY_REPOSITORY --branch $DISCOVERY_VERSION --depth 1 /openedx/discovery
 WORKDIR /openedx/discovery
 
 # Setup minimal yml config file, which is required by production settings
