@@ -1,41 +1,8 @@
-build:image:
-  script:
-    - apk add --no-cache docker
-    - python setup.py install
-    - tutor plugins enable discovery
-    - tutor config save
-    - tutor images build discovery
-  only:
-    refs:
-      - master
-  tags:
-    - private
-  stage: build
+variables:
+    TUTOR_PLUGIN: discovery
+    TUTOR_IMAGES: discovery
+    TUTOR_PYPI_PACKAGE: tutor-discovery
 
-deploy:image:
-  script:
-    - apk add --no-cache docker
-    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-    - python setup.py install
-    - tutor plugins enable discovery
-    - tutor config save
-    - tutor images push discovery
-  only:
-    refs:
-      - master
-  tags:
-    - private
-  stage: deploy
-
-deploy:pypi:
-  script:
-    - apk add --no-cache make
-    - pip3 install setuptools==41.6.0 twine==2.0.0
-    - python3 setup.py sdist
-    - twine upload --skip-existing dist/tutor-discovery*.tar.gz
-  only:
-    refs:
-      - master
-  tags:
-    - private
-  stage: deploy
+include:
+  - project: 'community/tutor-ci'
+    file: 'plugin-gitlab-ci.yml'
