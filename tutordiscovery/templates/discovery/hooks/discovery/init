@@ -24,6 +24,7 @@ make migrate
   --oidc-key "{{ DISCOVERY_OAUTH2_KEY_DEV }}" \
   --oidc-secret "{{ DISCOVERY_OAUTH2_SECRET }}"
 
+{% if DISCOVERY_HOST != "discovery.localhost" %}
 # Production partner
 ./manage.py create_or_update_partner  \
   --site-id 2 \
@@ -33,6 +34,7 @@ make migrate
   --oidc-url-root "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/oauth2" \
   --oidc-key "{{ DISCOVERY_OAUTH2_KEY }}" \
   --oidc-secret "{{ DISCOVERY_OAUTH2_SECRET }}"
+{% endif %}
 
 ./manage.py refresh_course_metadata --partner_code=dev
 ./manage.py update_index --disable-change-limit
