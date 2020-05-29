@@ -12,6 +12,7 @@ config = {
         "MYSQL_PASSWORD": "{{ 8|random_string }}",
         "SECRET_KEY": "{{ 20|random_string }}",
         "OAUTH2_SECRET": "{{ 8|random_string }}",
+        "OAUTH2_SECRET_SSO": "{{ 8|random_string }}",
     },
     "defaults": {
         "VERSION": __version__,
@@ -22,6 +23,8 @@ config = {
         "MYSQL_USERNAME": "discovery",
         "OAUTH2_KEY": "discovery",
         "OAUTH2_KEY_DEV": "discovery-dev",
+        "OAUTH2_KEY_SSO": "discovery-sso",
+        "OAUTH2_KEY_SSO_DEV": "discovery-sso-dev",
     },
 }
 

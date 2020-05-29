@@ -1,40 +1,20 @@
-export DJANGO_SETTINGS_MODULE=course_discovery.settings.tutor.production
-
 make migrate
 
-# Creating partners: the courses-api-url and oidc-url-root need to be accessible
-# from inside the discovery container in order to successfully run init.
-# TODO add --ecommerce-api-url parameters
 # Development partners
 ./manage.py create_or_update_partner  \
   --site-id 1 \
-  --site-domain discovery.localhost \
+  --site-domain {{ DISCOVERY_HOST }}:8381 \
   --code dev --name "Open edX - development" \
-  --courses-api-url "http://lms:8000/api/courses/v1/" \
-  --oidc-url-root "http://lms:8000/oauth2" \
-  --oidc-key "{{ DISCOVERY_OAUTH2_KEY }}" \
-  --oidc-secret "{{ DISCOVERY_OAUTH2_SECRET }}"
+  --lms-url="http://lms:8000" \
+  --courses-api-url "http://{{ LMS_HOST }}:8000/api/courses/v1/"
  
-./manage.py create_or_update_partner  \
-  --site-id 3 \
-  --site-domain localhost \
-  --code dev8381 --name "Open edX - development (localhost:8381)" \
-  --courses-api-url "http://lms:8000/api/courses/v1/" \
-  --oidc-url-root "http://lms:8000/oauth2" \
-  --oidc-key "{{ DISCOVERY_OAUTH2_KEY_DEV }}" \
-  --oidc-secret "{{ DISCOVERY_OAUTH2_SECRET }}"
-
-{% if DISCOVERY_HOST != "discovery.localhost" %}
 # Production partner
 ./manage.py create_or_update_partner  \
   --site-id 2 \
   --site-domain {{ DISCOVERY_HOST }} \
   --code openedx --name "Open edX" \
-  --courses-api-url "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/api/courses/v1/" \
-  --oidc-url-root "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/oauth2" \
-  --oidc-key "{{ DISCOVERY_OAUTH2_KEY }}" \
-  --oidc-secret "{{ DISCOVERY_OAUTH2_SECRET }}"
-{% endif %}
+  --lms-url="http://lms:8000" \
+  --courses-api-url "{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/api/courses/v1/"
 
-./manage.py refresh_course_metadata --partner_code=dev
+./manage.py refresh_course_metadata --partner_code=openedx
 ./manage.py update_index --disable-change-limit

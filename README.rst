@@ -36,11 +36,11 @@ Operations
 Creating a user
 ~~~~~~~~~~~~~~~
 
-The discovery user interface will be available at http://discovery.localhost for a local instance, and at ``DISCOVERY_HOST`` (by default: http(s)://discovery.<your lms host>) in production. In order to run commands from the UI, a user must be created::
+The discovery user interface will be available at http://discovery.local.overhang.io for a local test instance, and at ``DISCOVERY_HOST`` (by default: http(s)://discovery.<your lms host>) in production. In order to run commands from the UI, a user must be created::
   
   tutor local run discovery ./manage.py createsuperuser
 
-Then, you must login with this user at http://discovery.localhost/admin.
+Then, you must login with this user at http://discovery.local.overhang.io/admin.
 
 Alternatively, you can login with oauth2 using a pre-existing user created on the LMS/CMS by accessing http(s)://discovery.<your lms host>/login. To do so, the proper domain names must exist and point to the production server.
 
@@ -72,7 +72,7 @@ To debug the course discovery service, you are encouraged to mount the course-di
 
     tutor dev runserver -v ~/projets/openedx/repos/course-discovery/:/openedx/discovery discovery
     
-You can then access the development server at http://localhost:8381. Feel free to add breakpoints (``import pdb; pdb.set_trace()``) anywhere in your source code to debug your application.
+You can then access the development server at http://discovery.local.overhang.io:8381. Feel free to add breakpoints (``import pdb; pdb.set_trace()``) anywhere in your source code to debug your application.
 
 Alternatively, you may bind-mount a local course-discovery repository by adding the following to ``$(tutor config printroot)/env/dev/docker-compose.override.yml``::
     

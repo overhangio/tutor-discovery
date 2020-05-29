@@ -1,6 +1,10 @@
 discovery:
-    environment:
-      DJANGO_SETTINGS_MODULE: course_discovery.settings.tutor.development
-    command: ./manage.py runserver 0.0.0.0:8000
-    ports:
-        - "8381:8000"
+  environment:
+    DJANGO_SETTINGS_MODULE: course_discovery.settings.tutor.development
+  command: ./manage.py runserver 0.0.0.0:8381
+  ports:
+    - "8381:8381"
+  networks:
+    default:
+      aliases:
+        - "{{ DISCOVERY_HOST }}"

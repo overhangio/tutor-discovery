@@ -1,7 +1,5 @@
 SECRET_KEY = "{{ DISCOVERY_SECRET_KEY }}"
 ALLOWED_HOSTS = [
-    "localhost",
-    "discovery.localhost",
     "discovery",
     "{{ DISCOVERY_HOST }}"
 ]
@@ -59,15 +57,33 @@ LOGGING["handlers"]["local"] = {
     "filename": "/var/log/discovery.log",
     "formatter": "standard",
 }
+LOGGING["loggers"]["algoliasearch_django"] = {"level": "WARNING"}
 
+{% set jwt_rsa_key = rsa_import_key(JWT_RSA_PRIVATE_KEY) %}
+import json
 JWT_AUTH["JWT_ISSUER"] = "{{ JWT_COMMON_ISSUER }}"
 JWT_AUTH["JWT_AUDIENCE"] = "{{ JWT_COMMON_AUDIENCE }}"
 JWT_AUTH["JWT_SECRET_KEY"] = "{{ JWT_COMMON_SECRET_KEY }}"
-SOCIAL_AUTH_EDX_OIDC_SECRET = "{{ DISCOVERY_OAUTH2_SECRET }}"
-SOCIAL_AUTH_EDX_OIDC_ID_TOKEN_DECRYPTION_KEY = SOCIAL_AUTH_EDX_OIDC_SECRET
-SOCIAL_AUTH_EDX_OIDC_ISSUER = "{{ JWT_COMMON_ISSUER }}"
-SOCIAL_AUTH_EDX_OIDC_URL_ROOT = "http://lms:8000/oauth2"
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = {% if ACTIVATE_HTTPS %}True{% else %}False{% endif %}
+# TODO assign a discovery-specific public key
+JWT_AUTH["JWT_PUBLIC_SIGNING_JWK_SET"] = json.dumps(
+    {
+        "keys": [
+            {
+                "kid": "openedx",
+                "kty": "RSA",
+                "e": "{{ jwt_rsa_key.e|long_to_base64 }}",
+                "n": "{{ jwt_rsa_key.n|long_to_base64 }}",
+            }
+        ]
+    }
+)
+JWT_AUTH["JWT_ISSUERS"] = [
+    {
+        "ISSUER": "{{ JWT_COMMON_ISSUER }}",
+        "AUDIENCE": "{{ JWT_COMMON_AUDIENCE }}",
+        "SECRET_KEY": "{{ OPENEDX_SECRET_KEY }}"
+    }
+]
 
 EDX_DRF_EXTENSIONS = {
     'OAUTH2_USER_INFO_URL': '{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/oauth2/user_info',

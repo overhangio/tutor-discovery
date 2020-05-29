@@ -11,7 +11,7 @@ server {
 {% endif %}
 server {
   {% if ACTIVATE_HTTPS %}listen 443 {{ "" if WEB_PROXY else "ssl" }};{% else %}listen 80;{% endif %}
-  server_name discovery.localhost {{ DISCOVERY_HOST }};
+  server_name {{ DISCOVERY_HOST }};
 
   {% if ACTIVATE_HTTPS and not WEB_PROXY %}
   ssl_certificate /etc/letsencrypt/live/{{ DISCOVERY_HOST }}/fullchain.pem;

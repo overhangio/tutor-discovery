@@ -6,7 +6,7 @@ RUN apt update && \
 ENV LC_ALL en_US.UTF-8
 
 ARG DISCOVERY_REPOSITORY=https://github.com/edx/course-discovery.git
-ARG DISCOVERY_VERSION=open-release/ironwood.2
+ARG DISCOVERY_VERSION=open-release/juniper.1
 RUN mkdir -p /openedx/discovery && \
     git clone $DISCOVERY_REPOSITORY --branch $DISCOVERY_VERSION --depth 1 /openedx/discovery
 WORKDIR /openedx/discovery
@@ -22,7 +22,7 @@ RUN pip install --upgrade pip setuptools
 
 # Install a recent version of nodejs
 RUN pip install nodeenv
-RUN nodeenv /openedx/nodeenv --node=8.9.3 --prebuilt
+RUN nodeenv /openedx/nodeenv --node=12.13.0 --prebuilt
 ENV PATH /openedx/nodeenv/bin:${PATH}
 
 # Install python and nodejs requirements
