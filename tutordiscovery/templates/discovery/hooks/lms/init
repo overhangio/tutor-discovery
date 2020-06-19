@@ -1,5 +1,13 @@
-./manage.py lms manage_user discovery discovery@{{ LMS_HOST }} --staff --superuser
-./manage.py lms manage_user lms_catalog_service_user lms_catalog_service_user@{{ LMS_HOST }}
+# Modify users created with an incorrect email and that might clash with the newly created users
+./manage.py lms shell -c \
+  "from django.contrib.auth import get_user_model;\
+  get_user_model().objects.filter(username='discovery').exclude(email='discovery@openedx').update(email='discovery@openedx')"
+./manage.py lms shell -c \
+  "from django.contrib.auth import get_user_model;\
+  get_user_model().objects.filter(username='lms_catalog_service_user').exclude(email='lms_catalog_service_user@openedx').update(email='lms_catalog_service_user@openedx')"
+
+./manage.py lms manage_user discovery discovery@openedx --staff --superuser --unusable-password
+./manage.py lms manage_user lms_catalog_service_user lms_catalog_service_user@openedx --unusable-password
 
 # Development client
 ./manage.py lms create_dot_application \
