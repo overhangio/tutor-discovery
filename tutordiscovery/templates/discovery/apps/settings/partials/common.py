@@ -59,6 +59,7 @@ LOGGING["handlers"]["local"] = {
 }
 LOGGING["loggers"]["algoliasearch_django"] = {"level": "WARNING"}
 
+OAUTH_API_TIMEOUT = 5
 {% set jwt_rsa_key = rsa_import_key(JWT_RSA_PRIVATE_KEY) %}
 import json
 JWT_AUTH["JWT_ISSUER"] = "{{ JWT_COMMON_ISSUER }}"
