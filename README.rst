@@ -49,7 +49,7 @@ Re-indexing courses
 
 ::
 
-  tutor local run discovery ./manage.py refresh_course_metadata --partner_code=dev
+  tutor local run discovery ./manage.py refresh_course_metadata --partner_code=openedx
   tutor local run discovery ./manage.py update_index --disable-change-limit
 
 Caching programs
