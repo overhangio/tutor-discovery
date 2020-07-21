@@ -11,7 +11,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: discovery
-          image: {{ DOCKER_REGISTRY }}{{ DISCOVERY_DOCKER_IMAGE }}
+          image: {{ DISCOVERY_DOCKER_IMAGE }}
           env:
             - name: DJANGO_SETTINGS_MODULE
               value: course_discovery.settings.tutor.production

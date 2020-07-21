@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: discovery
-          image: {{ DOCKER_REGISTRY }}{{ DISCOVERY_DOCKER_IMAGE }}
+          image: {{ DISCOVERY_DOCKER_IMAGE }}
           ports:
             - containerPort: 8000
           env:

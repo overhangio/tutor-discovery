@@ -16,7 +16,7 @@ config = {
     },
     "defaults": {
         "VERSION": __version__,
-        "DOCKER_IMAGE": "overhangio/openedx-discovery:{{ DISCOVERY_VERSION }}",
+        "DOCKER_IMAGE": "{{ DOCKER_REGISTRY}}overhangio/openedx-discovery:{{ DISCOVERY_VERSION }}",
         "HOST": "discovery.{{ LMS_HOST }}",
         "INDEX_NAME": "catalog",
         "MYSQL_DATABASE": "discovery",
@@ -29,8 +29,8 @@ config = {
 }
 
 hooks = {
-    "build-image": {"discovery": "{{ DOCKER_REGISTRY}}{{ DISCOVERY_DOCKER_IMAGE }}"},
-    "remote-image": {"discovery": "{{ DOCKER_REGISTRY}}{{ DISCOVERY_DOCKER_IMAGE }}"},
+    "build-image": {"discovery": "{{ DISCOVERY_DOCKER_IMAGE }}"},
+    "remote-image": {"discovery": "{{ DISCOVERY_DOCKER_IMAGE }}"},
     "init": ["mysql", "lms", "discovery"],
 }
 
