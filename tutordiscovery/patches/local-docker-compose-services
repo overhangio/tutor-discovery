@@ -10,9 +10,3 @@ discovery:
     - mysql
     {% if ACTIVATE_LMS %}- lms{% endif %}
     {% if ACTIVATE_ELASTICSEARCH %}- elasticsearch{% endif %}
-
-discovery-assets:
-  image: {{ DISCOVERY_DOCKER_IMAGE }}
-  volumes:
-    - ../../data/discovery:/var/www/discovery
-  command: sh -c "rm -rf /var/www/discovery/assets && cp -r /openedx/discovery/course_discovery/assets/ /var/www/discovery/"

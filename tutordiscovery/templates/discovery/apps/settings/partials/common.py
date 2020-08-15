@@ -89,5 +89,3 @@ JWT_AUTH["JWT_ISSUERS"] = [
 EDX_DRF_EXTENSIONS = {
     'OAUTH2_USER_INFO_URL': '{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/oauth2/user_info',
 }
-
-STATIC_ROOT = "/openedx/static"

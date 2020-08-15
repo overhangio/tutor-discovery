@@ -2,6 +2,9 @@ from ..production import *
 
 {% include "discovery/apps/settings/partials/common.py" %}
 
+MIDDLEWARE = list(MIDDLEWARE)
+MIDDLEWARE.insert(0, "whitenoise.middleware.WhiteNoiseMiddleware")
+
 BACKEND_SERVICE_EDX_OAUTH2_KEY = "{{ DISCOVERY_OAUTH2_KEY }}"
 BACKEND_SERVICE_EDX_OAUTH2_SECRET = "{{ DISCOVERY_OAUTH2_SECRET }}"
 BACKEND_SERVICE_EDX_OAUTH2_PROVIDER_URL = "http://lms:8000/oauth2"

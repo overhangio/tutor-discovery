@@ -1,6 +1,0 @@
-- name: init-discovery-staticfiles
-  image: {{ DISCOVERY_DOCKER_IMAGE }}
-  args: ['cp', '-r', '/openedx/discovery/course_discovery/assets/', '/var/www/discovery/assets']
-  volumeMounts:
-    - mountPath: /var/www/discovery/
-      name: discovery-staticfiles

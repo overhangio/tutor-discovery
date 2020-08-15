@@ -81,9 +81,6 @@ Alternatively, you may bind-mount a local course-discovery repository by adding 
         discovery:
             volumes:
                 - /path/to/course-discovery/:/openedx/discovery
-        discovery-assets:
-            volumes:
-                - /path/to/course-discovery/:/openedx/discovery
 
 Once a local repository is mounted in the image, you will have to install nodejs dependencies and collect static assets::
 

@@ -29,6 +29,9 @@ RUN pip install nodeenv
 RUN nodeenv /openedx/nodeenv --node=12.13.0 --prebuilt
 ENV PATH /openedx/nodeenv/bin:${PATH}
 
+# Install whitenoise for serving static assets
+RUN pip install "whitenoise==5.1.0"
+
 # Install python and nodejs requirements
 # This is identical to "make production-requirements" but it was split in multiple
 # instructions to benefit from docker image caching

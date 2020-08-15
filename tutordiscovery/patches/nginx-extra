@@ -20,7 +20,7 @@ server {
 
   # Disables server version feedback on pages and in headers
   server_tokens off;
-  
+
   client_max_body_size 10m;
 
   location / {
@@ -33,11 +33,7 @@ server {
     proxy_redirect off;
     proxy_pass http://discovery-backend;
   }
-  
-  location /static {
-    alias /var/www/discovery/assets; 
-  }
-  
+
   location /media {
     alias /var/www/discovery/media; 
   }
