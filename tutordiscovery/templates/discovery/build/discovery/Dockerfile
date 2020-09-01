@@ -37,7 +37,7 @@ RUN pip install "whitenoise==5.1.0"
 # instructions to benefit from docker image caching
 RUN pip install -r requirements.txt
 ARG NPM_REGISTRY=https://registry.npmjs.org/
-RUN npm install --verbose --registry=$NPM_REGISTRYRUN --production
+RUN npm install --verbose --registry=$NPM_REGISTRY --production
 RUN ./node_modules/.bin/bower install --allow-root --production
 
 # Collect static assets
