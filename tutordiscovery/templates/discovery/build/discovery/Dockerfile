@@ -22,7 +22,7 @@ ENV DISCOVERY_CFG /openedx/config.yml
 # Install python venv
 RUN python3 -m venv ../venv/
 ENV PATH "/openedx/venv/bin:$PATH"
-RUN pip install --upgrade pip setuptools
+RUN pip install setuptools==44.1.0 pip==20.0.2 wheel==0.34.2
 
 # Install a recent version of nodejs
 RUN pip install nodeenv
