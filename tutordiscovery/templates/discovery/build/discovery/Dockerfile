@@ -14,6 +14,9 @@ WORKDIR /openedx/discovery
 # Fix LMS read timeout
 # https://github.com/edx/course-discovery/pull/2638
 RUN curl https://github.com/overhangio/course-discovery/commit/733e9d889f5aa83a49f5192f74df11ea5b77add8.patch | git apply -
+# Fix error on fatal callback
+# https://github.com/edx/course-discovery/pull/2730
+RUN curl https://github.com/overhangio/course-discovery/commit/f7e67d38338ad0d77959ad60e931a8630255d00e.patch | git apply -
 
 # Setup minimal yml config file, which is required by production settings
 COPY config.yml /openedx/config.yml
