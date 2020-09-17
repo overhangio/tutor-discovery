@@ -6,7 +6,7 @@ RUN apt update && \
 ENV LC_ALL en_US.UTF-8
 
 ARG DISCOVERY_REPOSITORY=https://github.com/edx/course-discovery.git
-ARG DISCOVERY_VERSION=open-release/juniper.3
+ARG DISCOVERY_VERSION={{ OPENEDX_COMMON_VERSION }}
 RUN mkdir -p /openedx/discovery && \
     git clone $DISCOVERY_REPOSITORY --branch $DISCOVERY_VERSION --depth 1 /openedx/discovery
 WORKDIR /openedx/discovery
