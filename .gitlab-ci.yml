@@ -2,6 +2,7 @@ variables:
     TUTOR_PLUGIN: discovery
     TUTOR_IMAGES: discovery
     TUTOR_PYPI_PACKAGE: tutor-discovery
+    OPENEDX_RELEASE: juniper
 
 include:
   - project: 'community/tutor-ci'
