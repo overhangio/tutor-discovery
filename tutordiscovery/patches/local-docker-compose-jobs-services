@@ -4,4 +4,4 @@ discovery-job:
     DJANGO_SETTINGS_MODULE: course_discovery.settings.tutor.production
   volumes:
     - ../plugins/discovery/apps/settings/tutor:/openedx/discovery/course_discovery/settings/tutor:ro
-  depends_on: {{ [("lms", ACTIVATE_LMS), ("mysql", ACTIVATE_MYSQL)]|list_if }}
+  depends_on: {{ [("lms", RUN_LMS), ("mysql", RUN_MYSQL)]|list_if }}

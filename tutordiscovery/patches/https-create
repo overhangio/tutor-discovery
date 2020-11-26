@@ -1,2 +1,0 @@
-# Discovery
-certbot certonly --standalone -n --agree-tos -m admin@{{ LMS_HOST }} -d {{ DISCOVERY_HOST }}

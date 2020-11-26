@@ -29,9 +29,9 @@ HAYSTACK_CONNECTIONS["default"].update(
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+        "BACKEND": "django_redis.cache.RedisCache",
         "KEY_PREFIX": "discovery",
-        "LOCATION": "{{ MEMCACHED_HOST }}:{{ MEMCACHED_PORT }}",
+        "LOCATION": "redis://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/1",
     }
 }
 
@@ -87,7 +87,7 @@ JWT_AUTH["JWT_ISSUERS"] = [
 ]
 
 EDX_DRF_EXTENSIONS = {
-    'OAUTH2_USER_INFO_URL': '{% if ACTIVATE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/oauth2/user_info',
+    'OAUTH2_USER_INFO_URL': '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/oauth2/user_info',
 }
 
 {{ patch("discovery-common-settings") }}

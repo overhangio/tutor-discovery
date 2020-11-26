@@ -1,3 +1,0 @@
-- mountPath: /var/www/discovery/
-  name: discovery-staticfiles
-  readOnly: true

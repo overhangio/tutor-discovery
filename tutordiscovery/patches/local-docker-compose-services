@@ -5,8 +5,4 @@ discovery:
   restart: unless-stopped
   volumes:
     - ../plugins/discovery/apps/settings/tutor:/openedx/discovery/course_discovery/settings/tutor:ro
-    - ../../data/discovery/media:/openedx/discovery/course_discovery/media
-  depends_on:
-    - mysql
-    {% if ACTIVATE_LMS %}- lms{% endif %}
-    {% if ACTIVATE_ELASTICSEARCH %}- elasticsearch{% endif %}
+  depends_on: {{ [("elasticsearch", RUN_ELASTICSEARCH), ("lms", RUN_LMS), ("mysql", RUN_MYSQL)]|list_if }}
