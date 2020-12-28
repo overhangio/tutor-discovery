@@ -14,7 +14,7 @@ WORKDIR /openedx/discovery
 
 # Fix TypeError at /jsi18n/
 # https://github.com/edx/course-discovery/pull/2860
-RUN curl https://github.com/edx/course-disco/commit/cbbefd56a4efa67070288e94a260c5e069d035d6.patch | git apply -
+RUN curl https://github.com/edx/course-discovery/commit/cbbefd56a4efa67070288e94a260c5e069d035d6.patch | git apply -
 
 # Setup minimal yml config file, which is required by production settings
 COPY config.yml /openedx/config.yml
@@ -30,12 +30,6 @@ RUN pip install nodeenv
 RUN nodeenv /openedx/nodeenv --node=12.13.0 --prebuilt
 ENV PATH /openedx/nodeenv/bin:${PATH}
 
-# Install django-redis for using redis as a django cache
-RUN pip install django-redis==4.12.1
-
-# Install uwsgi
-RUN pip install uwsgi==2.0.19.1
-
 # Install python and nodejs requirements
 # This is identical to "make production-requirements" but it was split in multiple
 # instructions to benefit from docker image caching
@@ -43,6 +37,12 @@ RUN pip install -r requirements.txt
 ARG NPM_REGISTRY=https://registry.npmjs.org/
 RUN npm install --verbose --registry=$NPM_REGISTRY --production
 RUN ./node_modules/.bin/bower install --allow-root --production
+
+# Install django-redis for using redis as a django cache
+RUN pip install django-redis==4.12.1
+
+# Install uwsgi
+RUN pip install uwsgi==2.0.19.1
 
 # Collect static assets
 COPY assets.py ./course_discovery/settings/assets.py
