@@ -44,6 +44,18 @@ Then, you must login with this user at http://discovery.local.overhang.io/admin.
 
 Alternatively, you can login with oauth2 using a pre-existing user created on the LMS/CMS by accessing http(s)://discovery.<your lms host>/login. To do so, the proper domain names must exist and point to the production server.
 
+Index configuration
+~~~~~~~~~~~~~~~~~~~
+
+Discovery uses separate indices for different models (the names are: course, course_run, person and program by default). And you can overwrite theses
+names by configuring ``DISCOVERY_INDEX_OVERRIDES``::
+
+    DISCOVERY_INDEX_OVERRIDES:
+      course_discovery.apps.course_metadata.search_indexes.documents.course: your-course-index-name
+      course_discovery.apps.course_metadata.search_indexes.documents.course_run: your-course-run-index-name
+      course_discovery.apps.course_metadata.search_indexes.documents.person: your-person-index-name
+      course_discovery.apps.course_metadata.search_indexes.documents.program: your-program-index-name
+
 Re-indexing courses
 ~~~~~~~~~~~~~~~~~~~
 

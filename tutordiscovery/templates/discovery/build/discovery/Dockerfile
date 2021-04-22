@@ -12,12 +12,8 @@ RUN mkdir -p /openedx/discovery && \
     git clone $DISCOVERY_REPOSITORY --branch $DISCOVERY_VERSION --depth 1 /openedx/discovery
 WORKDIR /openedx/discovery
 
-# Fix TypeError at /jsi18n/
-# https://github.com/edx/course-discovery/pull/2860
-RUN curl https://github.com/edx/course-discovery/commit/cbbefd56a4efa67070288e94a260c5e069d035d6.patch | git apply -
-
-# Setup minimal yml config file, which is required by production settings
-COPY config.yml /openedx/config.yml
+# Setup empty yml config file, which is required by production settings
+RUN echo "{}" > /openedx/config.yml
 ENV DISCOVERY_CFG /openedx/config.yml
 
 # Install python venv
