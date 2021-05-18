@@ -25,6 +25,7 @@ config = {
         "OAUTH2_KEY_DEV": "discovery-dev",
         "OAUTH2_KEY_SSO": "discovery-sso",
         "OAUTH2_KEY_SSO_DEV": "discovery-sso-dev",
+        "CACHE_REDIS_DB": "{{ OPENEDX_CACHE_REDIS_DB }}",
     },
 }
 
