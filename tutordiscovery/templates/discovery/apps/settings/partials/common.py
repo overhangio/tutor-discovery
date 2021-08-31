@@ -21,8 +21,7 @@ DATABASES = {
 }
 
 ELASTICSEARCH_DSL['default'].update({
-    {% if ELASTICSEARCH_SCHEME == "https" %}"use_ssl": True,{% endif %}
-    'hosts': {% if ELASTICSEARCH_SCHEME == "https" %}"https","http"{% endif %}://{{ ELASTICSEARCH_HOST }}:{{ ELASTICSEARCH_PORT }}/"
+    'hosts': "{{ ELASTICSEARCH_SCHEME }}://{{ ELASTICSEARCH_HOST }}:{{ ELASTICSEARCH_PORT }}/"
 })
 
 {% for name, index in DISCOVERY_INDEX_OVERRIDES.items() %}
