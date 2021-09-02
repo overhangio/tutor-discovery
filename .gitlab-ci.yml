@@ -3,6 +3,7 @@ variables:
     TUTOR_IMAGES: discovery
     TUTOR_PYPI_PACKAGE: tutor-discovery
     OPENEDX_RELEASE: lilac
+    GITHUB_REPO: overhangio/tutor-discovery
 
 include:
   - project: 'community/tutor-ci'
