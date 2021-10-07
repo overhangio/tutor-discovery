@@ -70,12 +70,14 @@ Caching programs
 In order to cache programs in the LMS, you will need to manually create a catalog integration. This step should be performed just once::
 
     tutor local run lms ./manage.py lms create_catalog_integrations --enabled \
-        --internal_api_url=http://discovery:8000/api/v1 \
+        --internal_api_url="" \
         --service_username=lms_catalog_service_user
 
 Then::
 
     tutor local run lms ./manage.py lms cache_programs
+
+This last step should be performed every time you create new or make changes to existing programs.
 
 Debugging
 ---------
