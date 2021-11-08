@@ -2,7 +2,7 @@ variables:
     TUTOR_PLUGIN: discovery
     TUTOR_IMAGES: discovery
     TUTOR_PYPI_PACKAGE: tutor-discovery
-    OPENEDX_RELEASE: lilac
+    OPENEDX_RELEASE: maple
     GITHUB_REPO: overhangio/tutor-discovery
 
 include:

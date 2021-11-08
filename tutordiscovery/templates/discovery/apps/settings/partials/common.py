@@ -53,11 +53,12 @@ EMAIL_HOST_USER = "{{ SMTP_USERNAME }}"
 EMAIL_HOST_PASSWORD = "{{ SMTP_PASSWORD }}"
 EMAIL_USE_TLS = {{ SMTP_USE_TLS }}
 
-LOGGING["handlers"]["local"] = {
-    "class": "logging.handlers.WatchedFileHandler",
-    "filename": "/var/log/discovery.log",
-    "formatter": "standard",
-}
+# Get rid of the "local" handler
+LOGGING["handlers"].pop("local")
+for logger in LOGGING["loggers"].values():
+    if "local" in logger["handlers"]:
+        logger["handlers"].remove("local")
+# Decrease verbosity of algolia logger
 LOGGING["loggers"]["algoliasearch_django"] = {"level": "WARNING"}
 
 OAUTH_API_TIMEOUT = 5
@@ -92,4 +93,3 @@ EDX_DRF_EXTENSIONS = {
 }
 
 {{ patch("discovery-common-settings") }}
-
