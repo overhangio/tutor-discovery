@@ -14,6 +14,9 @@ spec:
       labels:
         app.kubernetes.io/name: discovery
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGoup: 1000
       containers:
         - name: discovery
           image: {{ DISCOVERY_DOCKER_IMAGE }}
@@ -26,6 +29,8 @@ spec:
             - mountPath: /openedx/discovery/course_discovery/settings/tutor/production.py
               name: settings
               subPath: production.py
+          securityContext:
+            allowPrivilegeEscalation: false
       volumes:
         - name: settings
           configMap:

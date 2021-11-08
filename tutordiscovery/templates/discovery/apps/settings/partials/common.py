@@ -55,7 +55,7 @@ EMAIL_USE_TLS = {{ SMTP_USE_TLS }}
 
 LOGGING["handlers"]["local"] = {
     "class": "logging.handlers.WatchedFileHandler",
-    "filename": "/var/log/discovery.log",
+    "filename": "/openedx/data/logs/discovery.log",
     "formatter": "standard",
 }
 LOGGING["loggers"]["algoliasearch_django"] = {"level": "WARNING"}
@@ -92,4 +92,3 @@ EDX_DRF_EXTENSIONS = {
 }
 
 {{ patch("discovery-common-settings") }}
-

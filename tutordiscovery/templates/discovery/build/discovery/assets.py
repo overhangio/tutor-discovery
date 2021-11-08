@@ -2,7 +2,7 @@ from .base import *
 
 LOGGING["handlers"]["local"] = {
     "class": "logging.handlers.WatchedFileHandler",
-    "filename": "/var/log/discovery.log",
+    "filename": "/openedx/data/logs/discovery.log",
     "formatter": "standard",
 }
 
