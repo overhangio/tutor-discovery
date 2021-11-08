@@ -1,10 +1,10 @@
 from .base import *
 
-LOGGING["handlers"]["local"] = {
-    "class": "logging.handlers.WatchedFileHandler",
-    "filename": "/var/log/discovery.log",
-    "formatter": "standard",
-}
-
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
+
+# Get rid of the "local" handler
+LOGGING["handlers"].pop("local")
+for logger in LOGGING["loggers"].values():
+    if "local" in logger["handlers"]:
+        logger["handlers"].remove("local")

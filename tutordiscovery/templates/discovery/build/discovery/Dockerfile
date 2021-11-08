@@ -6,6 +6,10 @@ RUN apt update && \
   build-essential libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev
 ENV LC_ALL en_US.UTF-8
 
+ARG APP_USER_ID=1000
+RUN useradd --home-dir /openedx --create-home --shell /bin/bash --uid ${APP_USER_ID} app
+USER ${APP_USER_ID}
+
 ARG DISCOVERY_REPOSITORY=https://github.com/edx/course-discovery.git
 ARG DISCOVERY_VERSION={{ OPENEDX_COMMON_VERSION }}
 RUN mkdir -p /openedx/discovery && \
@@ -19,7 +23,7 @@ ENV DISCOVERY_CFG /openedx/config.yml
 # Install python venv
 RUN python3 -m venv ../venv/
 ENV PATH "/openedx/venv/bin:$PATH"
-RUN pip install setuptools==44.1.0 pip==20.0.2 wheel==0.34.2
+RUN pip install setuptools==44.1.0 pip==20.3.4 wheel==0.37.0
 
 # Install a recent version of nodejs
 RUN pip install nodeenv
@@ -35,13 +39,13 @@ RUN npm install --verbose --registry=$NPM_REGISTRY --production
 RUN ./node_modules/.bin/bower install --allow-root --production
 
 # Install django-redis for using redis as a django cache
-RUN pip install django-redis==4.12.1
+RUN pip install django-redis==5.0.0
 
 # Install uwsgi
-RUN pip install uwsgi==2.0.19.1
+RUN pip install uwsgi==2.0.20
 
 # Collect static assets
-COPY assets.py ./course_discovery/settings/assets.py
+COPY --chown=app:app assets.py ./course_discovery/settings/assets.py
 ENV DJANGO_SETTINGS_MODULE course_discovery.settings.assets
 RUN make static
 
