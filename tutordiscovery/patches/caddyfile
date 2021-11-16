@@ -1,5 +1,5 @@
 # Discovery
-{{ DISCOVERY_HOST }}{% if not ENABLE_HTTPS %}:80{% endif %} {
+{{ DISCOVERY_HOST }}{$default_site_port} {
     request_body {
         max_size 10MB
     }
