@@ -53,11 +53,6 @@ EMAIL_HOST_USER = "{{ SMTP_USERNAME }}"
 EMAIL_HOST_PASSWORD = "{{ SMTP_PASSWORD }}"
 EMAIL_USE_TLS = {{ SMTP_USE_TLS }}
 
-LOGGING["handlers"]["local"] = {
-    "class": "logging.handlers.WatchedFileHandler",
-    "filename": "/openedx/data/logs/discovery.log",
-    "formatter": "standard",
-}
 LOGGING["loggers"]["algoliasearch_django"] = {"level": "WARNING"}
 
 OAUTH_API_TIMEOUT = 5

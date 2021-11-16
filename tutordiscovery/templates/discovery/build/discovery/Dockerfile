@@ -16,9 +16,6 @@ RUN mkdir -p /openedx/discovery && \
     git clone $DISCOVERY_REPOSITORY --branch $DISCOVERY_VERSION --depth 1 /openedx/discovery
 WORKDIR /openedx/discovery
 
-# Create log directory
-RUN mkdir -p /openedx/data/logs
-
 # Setup empty yml config file, which is required by production settings
 RUN echo "{}" > /openedx/config.yml
 ENV DISCOVERY_CFG /openedx/config.yml
