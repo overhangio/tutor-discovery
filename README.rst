@@ -24,7 +24,7 @@ You will have to re-generate the environment::
 
     tutor config save
 
-The, run migrations::
+Then, run migrations::
 
     tutor local init
 
