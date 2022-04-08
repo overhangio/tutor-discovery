@@ -7,8 +7,8 @@ make migrate
   --code dev --name "Open edX - development" \
   --lms-url="http://lms:8000" \
   --studio-url="http://cms:8000" \
-  --courses-api-url "http://{{ LMS_HOST }}:8000/api/courses/v1/" \
-  --organizations-api-url "http://{{ LMS_HOST }}:8000/api/organizations/v1/"
+  --courses-api-url "http://{{ LMS_HOST }}/api/courses/v1/" \
+  --organizations-api-url "http://{{ LMS_HOST }}/api/organizations/v1/"
 
 # Production partner
 ./manage.py create_or_update_partner  \
