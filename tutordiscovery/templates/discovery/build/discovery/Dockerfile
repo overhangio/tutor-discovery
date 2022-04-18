@@ -58,4 +58,5 @@ CMD uwsgi \
     --single-interpreter \
     --enable-threads \
     --processes=2 \
+    --buffer-size=8192 \
     --wsgi-file course_discovery/wsgi.py
