@@ -23,11 +23,15 @@ ENV DISCOVERY_CFG /openedx/config.yml
 # Install python venv
 RUN python3 -m venv ../venv/
 ENV PATH "/openedx/venv/bin:$PATH"
-RUN pip install setuptools==44.1.0 pip==20.3.4 wheel==0.37.0
+# https://pypi.org/project/setuptools/
+# https://pypi.org/project/pip/
+# https://pypi.org/project/wheel/
+RUN pip install setuptools==62.1.0 pip==22.0.4 wheel==0.37.1
 
 # Install a recent version of nodejs
 RUN pip install nodeenv
-RUN nodeenv /openedx/nodeenv --node=12.13.0 --prebuilt
+# nodejs version picked from https://github.com/openedx/course-discovery/blob/master/Dockerfile
+RUN nodeenv /openedx/nodeenv --node=16.14.2 --prebuilt
 ENV PATH /openedx/nodeenv/bin:${PATH}
 
 # Install python and nodejs requirements
@@ -39,9 +43,11 @@ RUN npm install --verbose --registry=$NPM_REGISTRY --production
 RUN ./node_modules/.bin/bower install --allow-root --production
 
 # Install django-redis for using redis as a django cache
-RUN pip install django-redis==5.0.0
+# https://pypi.org/project/django-redis/
+RUN pip install django-redis==5.2.0
 
 # Install uwsgi
+# https://pypi.org/project/uWSGI/
 RUN pip install uwsgi==2.0.20
 
 # Collect static assets
