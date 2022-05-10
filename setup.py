@@ -8,7 +8,9 @@ with io.open(os.path.join(here, "README.rst"), "rt", encoding="utf8") as f:
     readme = f.read()
 
 about = {}
-with io.open(os.path.join(here, "tutordiscovery", "__about__.py"), "rt", encoding="utf-8") as f:
+with io.open(
+    os.path.join(here, "tutordiscovery", "__about__.py"), "rt", encoding="utf-8"
+) as f:
     exec(f.read(), about)
 
 
@@ -29,17 +31,15 @@ setup(
     long_description=readme,
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
-    install_requires=["tutor>=13.0.0,<14.0.0"],
+    install_requires=["tutor>=14.0.0,<15.0.0"],
     python_requires=">=3.5",
-    entry_points={"tutor.plugin.v0": ["discovery = tutordiscovery.plugin"]},
+    entry_points={"tutor.plugin.v1": ["discovery = tutordiscovery.plugin"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",

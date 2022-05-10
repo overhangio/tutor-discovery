@@ -84,17 +84,9 @@ Debugging
 
 To debug the course discovery service, you are encouraged to mount the course-discovery repo from the host in the development container:
 
-    tutor dev runserver -v ~/projets/openedx/repos/course-discovery/:/openedx/discovery discovery
+    tutor dev start --mount /path/to/course-discovery/ discovery
 
 You can then access the development server at http://discovery.local.overhang.io:8381. Feel free to add breakpoints (``import pdb; pdb.set_trace()``) anywhere in your source code to debug your application.
-
-Alternatively, you may bind-mount a local course-discovery repository by adding the following to ``$(tutor config printroot)/env/dev/docker-compose.override.yml``::
-
-    version: "3.7"
-    services:
-        discovery:
-            volumes:
-                - /path/to/course-discovery/:/openedx/discovery
 
 Once a local repository is mounted in the image, you will have to install nodejs dependencies and collect static assets::
 
