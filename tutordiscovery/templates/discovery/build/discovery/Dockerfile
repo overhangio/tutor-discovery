@@ -52,9 +52,10 @@ RUN pip install uwsgi==2.0.20
 
 # Collect static assets
 COPY --chown=app:app assets.py ./course_discovery/settings/assets.py
-ENV DJANGO_SETTINGS_MODULE course_discovery.settings.assets
-RUN make static
+RUN DJANGO_SETTINGS_MODULE=course_discovery.settings.assets make static
 
+# Run production server
+ENV DJANGO_SETTINGS_MODULE course_discovery.settings.tutor.production
 EXPOSE 8000
 CMD uwsgi \
     --static-map /static=/openedx/discovery/course_discovery/assets \
