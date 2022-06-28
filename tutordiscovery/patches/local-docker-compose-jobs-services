@@ -1,7 +1,6 @@
 discovery-job:
   image: {{ DISCOVERY_DOCKER_IMAGE }}
   environment:
-    DJANGO_SETTINGS_MODULE: course_discovery.settings.tutor.production
     DEFAULT_PARTNER_CODE: openedx
   volumes:
     - ../plugins/discovery/apps/settings/tutor:/openedx/discovery/course_discovery/settings/tutor:ro
