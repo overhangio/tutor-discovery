@@ -15,6 +15,8 @@ spec:
           env:
             - name: DJANGO_SETTINGS_MODULE
               value: course_discovery.settings.tutor.production
+            - name: DEFAULT_PARTNER_CODE
+              value: openedx
           volumeMounts:
             - mountPath: /openedx/discovery/course_discovery/settings/tutor/production.py
               name: settings

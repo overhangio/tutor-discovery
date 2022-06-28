@@ -1,0 +1,4 @@
+discovery-job:
+  environment:
+    DJANGO_SETTINGS_MODULE: course_discovery.settings.tutor.development
+    DEFAULT_PARTNER_CODE: dev

@@ -4,7 +4,8 @@ make migrate
 ./manage.py create_or_update_partner  \
   --site-id 1 \
   --site-domain {{ DISCOVERY_HOST }}:8381 \
-  --code dev --name "Open edX - development" \
+  --code dev \
+  --name "Open edX - development" \
   --lms-url="http://lms:8000" \
   --studio-url="http://cms:8000" \
   --courses-api-url "http://{{ LMS_HOST }}:8000/api/courses/v1/" \
@@ -14,11 +15,12 @@ make migrate
 ./manage.py create_or_update_partner  \
   --site-id 2 \
   --site-domain {{ DISCOVERY_HOST }} \
-  --code openedx --name "Open edX" \
+  --code openedx \
+  --name "Open edX" \
   --lms-url="http://lms:8000" \
   --studio-url="http://cms:8000" \
   --courses-api-url "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/api/courses/v1/" \
   --organizations-api-url "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/api/organizations/v1/"
 
-./manage.py refresh_course_metadata --partner_code=openedx
+./manage.py refresh_course_metadata --partner_code=$DEFAULT_PARTNER_CODE
 ./manage.py update_index --disable-change-limit
