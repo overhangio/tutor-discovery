@@ -28,7 +28,7 @@ Then, run migrations::
 
     tutor local init
 
-This last step is unnecessary if you run instead ``tutor local quickstart``.
+This last step is unnecessary if you run instead ``tutor local launch``.
 
 Operations
 ----------
