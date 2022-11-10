@@ -32,24 +32,24 @@ config = {
 }
 
 # Initialization tasks
-tutor_hooks.Filters.COMMANDS_INIT.add_item(
-    (
-        "mysql",
-        ("discovery", "tasks", "mysql", "init"),
-    )
-)
-tutor_hooks.Filters.COMMANDS_INIT.add_item(
-    (
-        "lms",
-        ("discovery", "tasks", "lms", "init"),
-    )
-)
-tutor_hooks.Filters.COMMANDS_INIT.add_item(
-    (
-        "discovery",
-        ("discovery", "tasks", "discovery", "init"),
-    )
-)
+init_tasks = ("mysql", "lms", "discovery")
+for service in init_tasks:
+    with open(
+        os.path.join(
+            pkg_resources.resource_filename("tutordiscovery", "templates"),
+            "discovery",
+            "tasks",
+            service,
+            "init",
+        ),
+        encoding="utf8",
+    ) as fi:
+        tutor_hooks.Filters.CLI_DO_INIT_TASKS.add_item(
+            (
+                service,
+                fi.read(),
+            )
+        )
 
 # Image management
 tutor_hooks.Filters.IMAGES_BUILD.add_item(
