@@ -3,12 +3,6 @@ Course Discovery plugin for `Tutor <https://docs.tutor.overhang.io>`_
 
 This is a plugin for `Tutor <https://docs.tutor.overhang.io>`_ that integrates the `Course Discovery <https://github.com/edx/course-discovery/>`__ application in an Open edX platform. it is useful for integration with, for example, `Ecommerce <https://github.com/edx/ecommerce>`__ or an external course catalog.
 
-.. image:: https://overhang.io/static/marketing/img/clients/e-ducation.jpg
-    :alt: E-ducation
-    :target: https://www.e-ducation.cn/
-
-This plugin was developed and open sourced to the community thanks to the generous support of `E-ducation <https://www.e-ducation.cn/>`_. Thank you!
-
 Installation
 ------------
 
@@ -92,6 +86,11 @@ Once a local repository is mounted in the image, you will have to install nodejs
 
     tutor dev run discovery npm install --development
     tutor dev run discovery make static.dev
+
+Troubleshooting
+---------------
+
+This Tutor plugin is maintained by Régis Behmo from `Overhang.IO <https://overhang.io>`__. Community support is available from the official `Open edX forum <https://discuss.openedx.org>`__. Do you need help with this plugin? See the `troubleshooting <https://docs.tutor.overhang.io/troubleshooting.html>`__ section from the Tutor documentation.
 
 License
 -------
