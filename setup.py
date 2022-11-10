@@ -31,10 +31,11 @@ setup(
     maintainer_email="regis@overhang.io",
     description="A Tutor plugin for course discovery, the Open edX service for providing access to consolidated course and program metadata",
     long_description=readme,
+    long_description_content_type="text/x-rst",
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
-    install_requires=["tutor>=14.0.0,<15.0.0"],
-    python_requires=">=3.5",
+    install_requires=["tutor>=15.0.0,<16.0.0"],
+    python_requires=">=3.7",
     entry_points={"tutor.plugin.v1": ["discovery = tutordiscovery.plugin"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",

@@ -32,7 +32,7 @@ Creating a user
 
 The discovery user interface will be available at http://discovery.local.overhang.io for a local test instance, and at ``DISCOVERY_HOST`` (by default: http(s)://discovery.<your lms host>) in production. In order to run commands from the UI, a user must be created::
 
-  tutor local run discovery ./manage.py createsuperuser
+    tutor local run discovery ./manage.py createsuperuser
 
 Then, you must login with this user at http://discovery.local.overhang.io/admin.
 
@@ -55,8 +55,8 @@ Re-indexing courses
 
 ::
 
-  tutor local run discovery ./manage.py refresh_course_metadata --partner_code=openedx
-  tutor local run discovery ./manage.py update_index --disable-change-limit
+    tutor local run discovery ./manage.py refresh_course_metadata --partner_code=openedx
+    tutor local run discovery ./manage.py update_index --disable-change-limit
 
 Caching programs
 ~~~~~~~~~~~~~~~~
@@ -91,6 +91,22 @@ Troubleshooting
 ---------------
 
 This Tutor plugin is maintained by Régis Behmo from `Overhang.IO <https://overhang.io>`__. Community support is available from the official `Open edX forum <https://discuss.openedx.org>`__. Do you need help with this plugin? See the `troubleshooting <https://docs.tutor.overhang.io/troubleshooting.html>`__ section from the Tutor documentation.
+
+
+`Max retries exceeded with url`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When running in production with HTTPS enabled, you may face this error during the `init` phase of `tutor local launch`:
+
+```
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='<LMS_HOST>', port=443): Max retries exceeded with url: /api/courses/v1/courses/?page=1&page_size=10&username=discovery
+```
+
+This error may be due to an incorrect DNS resolution of the LMS DNS record. With some cloud providers (for instance: [DigitalOcean](https://digitalocean.com/)) the `/etc/hosts` file on the host automatically contains the following entry::
+
+    127.0.1.1 <LMS HOST>
+
+This entry may be present if you named your server with the LMS hostname.
 
 License
 -------

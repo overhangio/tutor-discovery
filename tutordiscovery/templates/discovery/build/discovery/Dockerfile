@@ -3,7 +3,7 @@ FROM docker.io/ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && \
   apt install -y curl git-core language-pack-en python3 python3-pip python3-venv \
-  build-essential libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev
+  build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev
 ENV LC_ALL en_US.UTF-8
 
 ARG APP_USER_ID=1000
@@ -26,7 +26,7 @@ ENV PATH "/openedx/venv/bin:$PATH"
 # https://pypi.org/project/setuptools/
 # https://pypi.org/project/pip/
 # https://pypi.org/project/wheel/
-RUN pip install setuptools==62.1.0 pip==22.0.4 wheel==0.37.1
+RUN pip install setuptools==65.5.1 pip==22.3.1 wheel==0.38.4
 
 # Install a recent version of nodejs
 RUN pip install nodeenv
@@ -48,7 +48,7 @@ RUN pip install django-redis==5.2.0
 
 # Install uwsgi
 # https://pypi.org/project/uWSGI/
-RUN pip install uwsgi==2.0.20
+RUN pip install uwsgi==2.0.21
 
 # Collect static assets
 COPY --chown=app:app assets.py ./course_discovery/settings/assets.py
