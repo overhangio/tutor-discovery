@@ -94,7 +94,7 @@ This Tutor plugin is maintained by Régis Behmo from `Overhang.IO <https://overh
 
 
 `Max retries exceeded with url`
-+++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When running in production with HTTPS enabled, you may face this error during the `init` phase of `tutor local launch`:
 
