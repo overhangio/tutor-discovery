@@ -33,8 +33,8 @@ setup(
     long_description=readme,
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
-    install_requires=["tutor>=14.0.0,<15.0.0"],
-    python_requires=">=3.5",
+    install_requires=["tutor>=15.0.0,<16.0.0"],
+    python_requires=">=3.7",
     entry_points={"tutor.plugin.v1": ["discovery = tutordiscovery.plugin"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
