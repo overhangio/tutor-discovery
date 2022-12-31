@@ -38,7 +38,7 @@ ENV PATH /openedx/nodeenv/bin:${PATH}
 # This is identical to "make production-requirements" but it was split in multiple
 # instructions to benefit from docker image caching
 RUN pip install -r requirements.txt
-ARG NPM_REGISTRY=https://registry.npmjs.org/
+ARG NPM_REGISTRY={{ NPM_REGISTRY }}
 RUN npm install --verbose --registry=$NPM_REGISTRY --production
 RUN ./node_modules/.bin/bower install --allow-root --production
 
