@@ -73,6 +73,18 @@ Then::
 
 This last step should be performed every time you create new or make changes to existing programs.
 
+Install extra requirements
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to install extra requirements, use DISCOVERY_EXTRA_PIP_REQUIREMENTS and re-build the docker image.::
+
+  tutor config save \
+    --set 'DISCOVERY_EXTRA_PIP_REQUIREMENTS=["git+https://github.com/myusername/myplugin"]'
+
+Then, build the image, pointing to your fork if necessary::
+
+  tutor images build discovery
+
 Debugging
 ---------
 
