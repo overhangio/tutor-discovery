@@ -8,7 +8,7 @@ Installation
 
 This plugin requires tutor>=3.6.0. If you have installed tutor from a pre-compiled binary, it already comes bundled with the discovery plugin. Otherwise::
 
-    pip install tutor-discovery
+    tutor plugins install discovery
 
 Then, to enable this plugin, run::
 
