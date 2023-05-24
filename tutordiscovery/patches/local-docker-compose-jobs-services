@@ -4,4 +4,4 @@ discovery-job:
     DEFAULT_PARTNER_CODE: openedx
   volumes:
     - ../plugins/discovery/apps/settings/tutor:/openedx/discovery/course_discovery/settings/tutor:ro
-  depends_on: {{ [("lms", RUN_LMS), ("mysql", RUN_MYSQL)]|list_if }}
+  depends_on: {{ [("mysql", RUN_MYSQL)]|list_if }}

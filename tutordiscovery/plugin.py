@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 from glob import glob
 import os
 import pkg_resources
+import typing as t
 
 from tutor import hooks as tutor_hooks
 
@@ -74,6 +77,7 @@ tutor_hooks.Filters.IMAGES_PUSH.add_item(
     )
 )
 
+
 # Automount /openedx/discovery folder from the container
 @tutor_hooks.Filters.COMPOSE_MOUNTS.add()
 def _mount_course_discovery(mounts, name):
@@ -115,3 +119,17 @@ tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
 tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
     list(config.get("overrides", {}).items())
 )
+
+########################################
+# Credentials Public Host
+########################################
+
+
+@tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
+def _discovery_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
+    if context_name == "dev":
+        # todo: will may change the below dev port when i try this plugin in dev mode
+        hosts += ["discovery.{{ LMS_HOST }}:8000"]
+    else:
+        hosts += ["discovery.{{ LMS_HOST }}"]
+    return hosts
