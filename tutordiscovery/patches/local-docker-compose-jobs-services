@@ -6,4 +6,4 @@ discovery-job:
     - ../plugins/discovery/apps/settings/tutor:/openedx/discovery/course_discovery/settings/tutor:ro
   depends_on: 
     - lms
-    {{ [("mysql", RUN_MYSQL)]|list_if }}
+    {% if RUN_MYSQL %}- mysql{% endif %}
