@@ -15,6 +15,7 @@ RUN if [ "$APP_USER_ID" = 0 ]; then echo "app user may not be root" && false; fi
 RUN useradd --home-dir /openedx --create-home --shell /bin/bash --uid ${APP_USER_ID} app
 USER ${APP_USER_ID}
 
+###### Git-clone course-discovery repo
 ARG DISCOVERY_REPOSITORY=https://github.com/edx/course-discovery.git
 ARG DISCOVERY_VERSION='{{ OPENEDX_COMMON_VERSION }}'
 RUN mkdir -p /openedx/discovery && \
@@ -49,11 +50,10 @@ RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,
 {% for extra_requirement in DISCOVERY_EXTRA_PIP_REQUIREMENTS %}RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install '{{ extra_requirements }}'
 {% endfor %}
 
+# Install npm, bower requirements
 ARG NPM_REGISTRY='{{ NPM_REGISTRY }}'
-USER root
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.npm/,sharing=shared {% endif %}npm install --verbose --no-audit --registry=$NPM_REGISTRY --production
-RUN ./node_modules/.bin/bower install --allow-root --production
-USER ${APP_USER_ID}
+RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.npm/,sharing=shared,uid=${APP_USER_ID} {% endif %}npm clean-install --verbose --no-audit --registry=$NPM_REGISTRY --production
+RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/bower,sharing=shared,uid=${APP_USER_ID} {% endif %}./node_modules/.bin/bower install --allow-root --production
 
 # Install extra requirements
 RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install \
