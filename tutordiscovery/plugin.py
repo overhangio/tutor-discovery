@@ -78,11 +78,25 @@ tutor_hooks.Filters.IMAGES_PUSH.add_item(
 )
 
 
+REPO_NAME = "course-discovery"
+APP_NAME = "discovery"
+
+
 # Automount /openedx/discovery folder from the container
 @tutor_hooks.Filters.COMPOSE_MOUNTS.add()
 def _mount_course_discovery(mounts, name):
-    if name == "course-discovery":
-        mounts.append(("discovery", "/openedx/discovery"))
+    if name == REPO_NAME:
+        mounts.append((APP_NAME, "/openedx/discovery"))
+    return mounts
+
+
+# Bind-mount repo at build-time, both for prod and dev images
+@tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
+def _mount_course_discovery_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
+    path_basename = os.path.basename(host_path)
+    if path_basename == REPO_NAME:
+        mounts.append((APP_NAME, f"{APP_NAME}-src"))
+        mounts.append((f"{APP_NAME}-dev", f"{APP_NAME}-src"))
     return mounts
 
 
@@ -128,35 +142,3 @@ def _print_discovery_public_hosts(hosts: list[str], context_name: t.Literal["loc
     else:
         hosts += ["discovery.{{ LMS_HOST }}"]
     return hosts
-
-
-REPO_PREFIX = "frontend-app-"
-
-
-@tutor_hooks.Filters.COMPOSE_MOUNTS.add()
-def _mount_frontend_apps(volumes, path_basename):
-    """
-    If the user mounts any repo named frontend-app-APPNAME, then make sure
-    it's available in the APPNAME service container. This is only applicable
-    in dev mode, because in production, all MFEs are built and hosted on the
-    singular 'mfe' service container.
-    """
-    if path_basename.startswith(REPO_PREFIX):
-        # Assumption:
-        # For each repo named frontend-app-APPNAME, there is an associated
-        # docker-compose service named APPNAME. If this assumption is broken,
-        # then Tutor will try to mount the repo in a service that doesn't exist.
-        app_name = path_basename[len(REPO_PREFIX) :]
-        volumes += [(app_name, "/openedx/app")]
-    return volumes
-
-
-@tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
-def _mount_frontend_apps_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
-    path_basename = os.path.basename(host_path)
-    if path_basename.startswith(REPO_PREFIX):
-        # Bind-mount repo at build-time, both for prod and dev images
-        app_name = path_basename[len(REPO_PREFIX) :]
-        mounts.append(("mfe", f"{app_name}-src"))
-        mounts.append((f"{app_name}-dev", f"{app_name}-src"))
-    return mounts
