@@ -120,16 +120,44 @@ tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
     list(config.get("overrides", {}).items())
 )
 
-########################################
-# Credentials Public Host
-########################################
-
 
 @tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
-def _discovery_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
+def _print_discovery_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
     if context_name == "dev":
         # todo: will may change the below dev port when i try this plugin in dev mode
         hosts += ["discovery.{{ LMS_HOST }}:8000"]
     else:
         hosts += ["discovery.{{ LMS_HOST }}"]
     return hosts
+
+
+REPO_PREFIX = "frontend-app-"
+
+
+@tutor_hooks.Filters.COMPOSE_MOUNTS.add()
+def _mount_frontend_apps(volumes, path_basename):
+    """
+    If the user mounts any repo named frontend-app-APPNAME, then make sure
+    it's available in the APPNAME service container. This is only applicable
+    in dev mode, because in production, all MFEs are built and hosted on the
+    singular 'mfe' service container.
+    """
+    if path_basename.startswith(REPO_PREFIX):
+        # Assumption:
+        # For each repo named frontend-app-APPNAME, there is an associated
+        # docker-compose service named APPNAME. If this assumption is broken,
+        # then Tutor will try to mount the repo in a service that doesn't exist.
+        app_name = path_basename[len(REPO_PREFIX) :]
+        volumes += [(app_name, "/openedx/app")]
+    return volumes
+
+
+@tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
+def _mount_frontend_apps_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
+    path_basename = os.path.basename(host_path)
+    if path_basename.startswith(REPO_PREFIX):
+        # Bind-mount repo at build-time, both for prod and dev images
+        app_name = path_basename[len(REPO_PREFIX) :]
+        mounts.append(("mfe", f"{app_name}-src"))
+        mounts.append((f"{app_name}-dev", f"{app_name}-src"))
+    return mounts
