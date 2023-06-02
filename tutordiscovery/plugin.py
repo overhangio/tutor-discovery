@@ -138,7 +138,7 @@ tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
 @tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
 def _print_discovery_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
     if context_name == "dev":
-        hosts += ["discovery.{{ LMS_HOST }}:8381"]
+        hosts += ["{{ DISCOVERY_HOST }}:8381"]
     else:
-        hosts += ["discovery.{{ LMS_HOST }}"]
+        hosts += ["{{ DISCOVERY_HOST }}"]
     return hosts
