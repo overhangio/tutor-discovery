@@ -61,15 +61,20 @@ Re-indexing courses
 Caching programs
 ~~~~~~~~~~~~~~~~
 
-In order to cache programs in the LMS, you will need to manually create a catalog integration. This step should be performed just once::
+In order to cache programs in the LMS, you will need to manually create a catalog integration. Make sure you use staff user for the below command. If ``lms_catalog_service_user`` is not a staff user, then make it a staff user in your LMS User model. This step should be performed just once::
 
     tutor local run lms ./manage.py lms create_catalog_integrations --enabled \
         --internal_api_url="" \
         --service_username=lms_catalog_service_user
 
-Then::
+Then run the below command, this command will cause errors every time as it tries to cache programs from all sites that are added to your LMS sites model::
 
     tutor local run lms ./manage.py lms cache_programs
+
+If you don't want the errors, then make use of an extra argumet to the command .i.e. ``--domain``. This argument will be equal to ``local.overhang.io`` if you are running tutor local and ``local.overhang.io:8000`` if you are running tutor dev::
+    tutor local run lms ./manage.py lms cache_programs --domain="local.overhang.io"
+    or
+    tutor dev run lms ./manage.py lms cache_programs --domain="local.overhang.io:8000"
 
 This last step should be performed every time you create new or make changes to existing programs.
 
