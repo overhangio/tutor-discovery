@@ -10,16 +10,30 @@ RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/var/cache/apt,shari
     build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev
 ENV LC_ALL en_US.UTF-8
 
+###### Git-clone course-discovery repo
+FROM minimal as code
+ARG DISCOVERY_REPOSITORY=https://github.com/openedx/course-discovery.git
+ARG DISCOVERY_VERSION='{{ OPENEDX_COMMON_VERSION }}'
+RUN mkdir -p /openedx/discovery && \
+    git clone $DISCOVERY_REPOSITORY --branch $DISCOVERY_VERSION --depth 1 /openedx/discovery
+
+##### Empty layer with just the repo at the root.
+# This is useful when overriding the build context with a host repo:
+# docker build --build-context course-discovery=/path/to/course-discovery
+FROM scratch as discovery
+COPY --from=code /openedx/discovery /
+
+##### Production layer
+FROM minimal as production
+
+# Create app user
 ARG APP_USER_ID=1000
 RUN if [ "$APP_USER_ID" = 0 ]; then echo "app user may not be root" && false; fi
 RUN useradd --home-dir /openedx --create-home --shell /bin/bash --uid ${APP_USER_ID} app
 USER ${APP_USER_ID}
 
-###### Git-clone course-discovery repo
-ARG DISCOVERY_REPOSITORY=https://github.com/edx/course-discovery.git
-ARG DISCOVERY_VERSION='{{ OPENEDX_COMMON_VERSION }}'
-RUN mkdir -p /openedx/discovery && \
-    git clone $DISCOVERY_REPOSITORY --branch $DISCOVERY_VERSION --depth 1 /openedx/discovery
+# Copy repo
+COPY --chown=app:app --from=discovery / /openedx/discovery
 WORKDIR /openedx/discovery
 
 # Setup empty yml config file, which is required by production settings
@@ -41,6 +55,10 @@ RUN pip install nodeenv==1.7.0
 # nodejs version picked from https://github.com/openedx/course-discovery/blob/master/Dockerfile
 RUN nodeenv /openedx/nodeenv --node=16.14.2 --prebuilt
 ENV PATH /openedx/nodeenv/bin:${PATH}
+# Install npm/bower requirements
+ARG NPM_REGISTRY='{{ NPM_REGISTRY }}'
+RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.npm/,sharing=shared,uid=${APP_USER_ID} {% endif %}npm clean-install --no-audit --registry=$NPM_REGISTRY --production
+RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/bower/,sharing=shared,uid=${APP_USER_ID} {% endif %}./node_modules/.bin/bower install --allow-root --production
 
 # Install python and nodejs requirements
 # This is identical to "make production-requirements" but it was split in multiple
@@ -49,11 +67,6 @@ ENV PATH /openedx/nodeenv/bin:${PATH}
 RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install -r requirements.txt
 {% for extra_requirement in DISCOVERY_EXTRA_PIP_REQUIREMENTS %}RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install '{{ extra_requirements }}'
 {% endfor %}
-
-# Install npm, bower requirements
-ARG NPM_REGISTRY='{{ NPM_REGISTRY }}'
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.npm/,sharing=shared,uid=${APP_USER_ID} {% endif %}npm clean-install --verbose --no-audit --registry=$NPM_REGISTRY --production
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/bower,sharing=shared,uid=${APP_USER_ID} {% endif %}./node_modules/.bin/bower install --allow-root --production
 
 # Install extra requirements
 RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install \
