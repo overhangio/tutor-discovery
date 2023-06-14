@@ -1,4 +1,4 @@
-{% if is_buildkit_enabled() %}# syntax=docker/dockerfile:1.4{% endif %}
+# {% if is_buildkit_enabled() %}syntax=docker/dockerfile:1.4{% endif %}
 ###### Minimal image with base system requirements for most stages
 FROM docker.io/ubuntu:20.04 as minimal
 
@@ -65,8 +65,7 @@ RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/bowe
 # instructions to benefit from docker image caching
 # Install base requirements
 RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install -r requirements.txt
-{% for extra_requirement in DISCOVERY_EXTRA_PIP_REQUIREMENTS %}RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install '{{ extra_requirements }}'
-{% endfor %}
+RUN {% for extra_requirement in DISCOVERY_EXTRA_PIP_REQUIREMENTS %} {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install '{{ extra_requirements }}' {% endfor %}
 
 # Install extra requirements
 RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install \
