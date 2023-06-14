@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 from glob import glob
 import os
 import pkg_resources
+import typing as t
 
 from tutor import hooks as tutor_hooks
 
@@ -74,11 +77,26 @@ tutor_hooks.Filters.IMAGES_PUSH.add_item(
     )
 )
 
+
+REPO_NAME = "course-discovery"
+APP_NAME = "discovery"
+
+
 # Automount /openedx/discovery folder from the container
 @tutor_hooks.Filters.COMPOSE_MOUNTS.add()
 def _mount_course_discovery(mounts, name):
-    if name == "course-discovery":
-        mounts.append(("discovery", "/openedx/discovery"))
+    if name == REPO_NAME:
+        mounts.append((APP_NAME, "/openedx/discovery"))
+    return mounts
+
+
+# Bind-mount repo at build-time, both for prod and dev images
+@tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
+def _mount_course_discovery_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
+    path_basename = os.path.basename(host_path)
+    if path_basename == REPO_NAME:
+        mounts.append((APP_NAME, f"{APP_NAME}-src"))
+        mounts.append((f"{APP_NAME}-dev", f"{APP_NAME}-src"))
     return mounts
 
 
@@ -115,3 +133,12 @@ tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
 tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
     list(config.get("overrides", {}).items())
 )
+
+
+@tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
+def _print_discovery_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
+    if context_name == "dev":
+        hosts += ["{{ DISCOVERY_HOST }}:8381"]
+    else:
+        hosts += ["{{ DISCOVERY_HOST }}"]
+    return hosts
