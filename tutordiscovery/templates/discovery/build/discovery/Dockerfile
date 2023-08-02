@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked{% endif %} \
     apt update && \
-    apt install -y curl git-core language-pack-en python3 python3-dev python3-pip python3-venv \
+    apt install -y curl git-core gettext language-pack-en python3 python3-dev python3-pip python3-venv \
     build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev \
     pkg-config
 ENV LC_ALL en_US.UTF-8
@@ -61,7 +61,15 @@ RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,
     # Use redis as a django cache https://pypi.org/project/django-redis/
     django-redis==5.2.0 \
     # uwsgi server https://pypi.org/project/uWSGI/
-    uwsgi==2.0.21
+    uwsgi==2.0.21 \
+    # Open edX Atlas tranlsation management tool https://pypi.org/project/openedx-atlas/
+    openedx-atlas==0.5.0
+
+{% if DISCOVERY_ATLAS_PULL %}
+# Pull translations. Support the OEP-58 proposal behind a feature flag until it's fully implemented.
+RUN atlas pull {{ patch("atlas-extra-args") }} translations/course-discovery/course_discovery/conf/locale:course_discovery/conf/locale
+RUN python manage.py compilemessages
+{% endif %}
 
 # Collect static assets
 COPY --chown=app:app assets.py ./course_discovery/settings/assets.py
