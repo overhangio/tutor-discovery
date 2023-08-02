@@ -31,6 +31,7 @@ config = {
         "OAUTH2_KEY_SSO": "discovery-sso",
         "OAUTH2_KEY_SSO_DEV": "discovery-sso-dev",
         "CACHE_REDIS_DB": "{{ OPENEDX_CACHE_REDIS_DB }}",
+        "ATLAS_PULL": False,
         "EXTRA_PIP_REQUIREMENTS": [],
     },
 }
