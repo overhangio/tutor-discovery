@@ -4,10 +4,11 @@ FROM docker.io/ubuntu:20.04 as minimal
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked{% endif %} \ 
+    --mount=type=cache,target=/var/lib/apt,sharing=locked{% endif %} \
     apt update && \
-    apt install -y curl git-core language-pack-en python3 python3-pip python3-venv \
-    build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev
+    apt install -y curl git-core language-pack-en python3 python3-dev python3-pip python3-venv \
+    build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev \
+    pkg-config
 ENV LC_ALL en_US.UTF-8
 
 ARG APP_USER_ID=1000
