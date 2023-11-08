@@ -19,3 +19,10 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-16.0.1'></a>
+## v16.0.1 (2023-11-08)
+
+- [Improvement] Add a scriv-compliant changelog. (by @regisb)
+
+- [BugFix] Corrected variable name for installing extra pip requirements. (by @Faraz32123)
+
