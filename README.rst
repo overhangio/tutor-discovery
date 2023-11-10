@@ -14,15 +14,9 @@ Then, to enable this plugin, run::
 
     tutor plugins enable discovery
 
-You will have to re-generate the environment::
+Restart and initialize your platform with::
 
-    tutor config save
-
-Then, run migrations::
-
-    tutor local init
-
-This last step is unnecessary if you run instead ``tutor local launch``.
+    tutor local launch
 
 Operations
 ----------

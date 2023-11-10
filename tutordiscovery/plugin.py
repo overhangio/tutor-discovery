@@ -32,6 +32,7 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "OAUTH2_KEY_SSO_DEV": "discovery-sso-dev",
         "CACHE_REDIS_DB": "{{ OPENEDX_CACHE_REDIS_DB }}",
         "ATLAS_PULL": False,
+        "DEFAULT_PRODUCT_SOURCE_SLUG": "edx",
         "EXTRA_PIP_REQUIREMENTS": [],
         "REPOSITORY": "https://github.com/openedx/course-discovery.git",
         "REPOSITORY_VERSION": "{{ OPENEDX_COMMON_VERSION }}",

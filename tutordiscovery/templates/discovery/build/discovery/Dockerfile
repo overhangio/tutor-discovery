@@ -1,10 +1,10 @@
-{% if is_buildkit_enabled() %}# syntax=docker/dockerfile:1.4{% endif %}
+# syntax=docker/dockerfile:1.4
 ###### Minimal image with base system requirements for most stages
 FROM docker.io/ubuntu:20.04 as minimal
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked{% endif %} \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
     apt install -y curl git-core gettext language-pack-en python3 python3-dev python3-pip python3-venv \
     build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev \
@@ -31,14 +31,14 @@ ENV DISCOVERY_CFG /openedx/config.yml
 RUN python3 -m venv ../venv/
 ENV PATH "/openedx/venv/bin:$PATH"
 
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install \
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     # https://pypi.org/project/setuptools/
     # https://pypi.org/project/pip/
     # https://pypi.org/project/wheel/
-    setuptools==67.7.2 pip==23.1.2. wheel==0.40.0
+    setuptools==68.2.2 pip==23.2.1. wheel==0.41.2
 
 # Install a recent version of nodejs
-RUN pip install nodeenv==1.7.0
+RUN pip install nodeenv==1.8.0
 # nodejs version picked from https://github.com/openedx/course-discovery/blob/master/Dockerfile
 RUN nodeenv /openedx/nodeenv --node=16.14.2 --prebuilt
 ENV PATH /openedx/nodeenv/bin:${PATH}
@@ -47,21 +47,21 @@ ENV PATH /openedx/nodeenv/bin:${PATH}
 # This is identical to "make production-requirements" but it was split in multiple
 # instructions to benefit from docker image caching
 # Install base requirements
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install -r requirements.txt
-{% for extra_requirement in DISCOVERY_EXTRA_PIP_REQUIREMENTS %}RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install '{{ extra_requirement }}'
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install -r requirements.txt
+{% for extra_requirement in DISCOVERY_EXTRA_PIP_REQUIREMENTS %}RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install '{{ extra_requirement }}'
 {% endfor %}
 
 # Install npm, bower requirements
 ARG NPM_REGISTRY='{{ NPM_REGISTRY }}'
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.npm/,sharing=shared,uid=${APP_USER_ID} {% endif %}npm clean-install --verbose --no-audit --registry=$NPM_REGISTRY --production
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/bower,sharing=shared,uid=${APP_USER_ID} {% endif %}./node_modules/.bin/bower install --allow-root --production
+RUN --mount=type=cache,target=/openedx/.npm/,sharing=shared,uid=${APP_USER_ID} npm clean-install --verbose --no-audit --registry=$NPM_REGISTRY --production
+RUN --mount=type=cache,target=/openedx/.cache/bower,sharing=shared,uid=${APP_USER_ID} ./node_modules/.bin/bower install --allow-root --production
 
 # Install extra requirements
-RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,sharing=shared {% endif %}pip install \
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     # Use redis as a django cache https://pypi.org/project/django-redis/
-    django-redis==5.2.0 \
+    django-redis==5.4.0 \
     # uwsgi server https://pypi.org/project/uWSGI/
-    uwsgi==2.0.21
+    uwsgi==2.0.22
 
 {% if DISCOVERY_ATLAS_PULL %}
 # Pull translations. Support the OEP-58 proposal behind a feature flag until it's fully implemented.

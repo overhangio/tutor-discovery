@@ -2,7 +2,7 @@ variables:
     TUTOR_PLUGIN: discovery
     TUTOR_IMAGES: discovery
     TUTOR_PYPI_PACKAGE: tutor-discovery
-    OPENEDX_RELEASE: palm
+    OPENEDX_RELEASE: quince
     GITHUB_REPO: overhangio/tutor-discovery
 
 include:
