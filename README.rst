@@ -71,7 +71,7 @@ Then run the below command, this command will cause errors every time as it trie
 
     tutor local run lms ./manage.py lms cache_programs
 
-If you don't want the errors, then make use of an extra argumet to the command .i.e. ``--domain``. This argument will be equal to ``local.overhang.io`` if you are running tutor local and ``local.overhang.io:8000`` if you are running tutor dev::
+If you don't want the errors, then make use of an extra argument to the command .i.e. ``--domain``. This argument will be equal to ``local.overhang.io`` if you are running tutor local and ``local.overhang.io:8000`` if you are running tutor dev::
     tutor local run lms ./manage.py lms cache_programs --domain="local.overhang.io"
     or
     tutor dev run lms ./manage.py lms cache_programs --domain="local.overhang.io:8000"
