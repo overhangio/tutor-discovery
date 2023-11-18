@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from glob import glob
 import os
-import pkg_resources
 import typing as t
+from glob import glob
 
+import pkg_resources
 from tutor import hooks as tutor_hooks
 from tutor.__about__ import __version_suffix__
 
@@ -15,6 +15,8 @@ if __version_suffix__:
     __version__ += "-" + __version_suffix__
 
 HERE = os.path.abspath(os.path.dirname(__file__))
+REPO_NAME = "course-discovery"
+APP_NAME = "discovery"
 
 config: t.Dict[str, t.Dict[str, t.Any]] = {
     "defaults": {
@@ -32,6 +34,12 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "EXTRA_PIP_REQUIREMENTS": [],
         "REPOSITORY": "https://github.com/openedx/course-discovery.git",
         "REPOSITORY_VERSION": "{{ OPENEDX_COMMON_VERSION }}",
+    },
+    "unique": {
+        "MYSQL_PASSWORD": "{{ 8|random_string }}",
+        "SECRET_KEY": "{{ 20|random_string }}",
+        "OAUTH2_SECRET": "{{ 8|random_string }}",
+        "OAUTH2_SECRET_SSO": "{{ 8|random_string }}",
     },
 }
 
@@ -78,10 +86,6 @@ tutor_hooks.Filters.IMAGES_PUSH.add_item(
 )
 
 
-REPO_NAME = "course-discovery"
-APP_NAME = "discovery"
-
-
 # Automount /openedx/discovery folder from the container
 @tutor_hooks.Filters.COMPOSE_MOUNTS.add()
 def _mount_course_discovery(
@@ -104,7 +108,6 @@ def _mount_course_discovery_on_build(
     return mounts
 
 
-####### Boilerplate code
 # Add the "templates" folder as a template root
 tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
     pkg_resources.resource_filename("tutordiscovery", "templates")
