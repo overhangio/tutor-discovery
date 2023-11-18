@@ -61,9 +61,7 @@ RUN {% if is_buildkit_enabled() %}--mount=type=cache,target=/openedx/.cache/pip,
     # Use redis as a django cache https://pypi.org/project/django-redis/
     django-redis==5.2.0 \
     # uwsgi server https://pypi.org/project/uWSGI/
-    uwsgi==2.0.21 \
-    # Open edX Atlas tranlsation management tool https://pypi.org/project/openedx-atlas/
-    openedx-atlas==0.5.0
+    uwsgi==2.0.21
 
 {% if DISCOVERY_ATLAS_PULL %}
 # Pull translations. Support the OEP-58 proposal behind a feature flag until it's fully implemented.
