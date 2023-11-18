@@ -16,14 +16,7 @@ if __version_suffix__:
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
-
-config = {
-    "unique": {
-        "MYSQL_PASSWORD": "{{ 8|random_string }}",
-        "SECRET_KEY": "{{ 20|random_string }}",
-        "OAUTH2_SECRET": "{{ 8|random_string }}",
-        "OAUTH2_SECRET_SSO": "{{ 8|random_string }}",
-    },
+config: t.Dict[str, t.Dict[str, t.Any]] = {
     "defaults": {
         "VERSION": __version__,
         "DOCKER_IMAGE": "{{ DOCKER_REGISTRY}}overhangio/openedx-discovery:{{ DISCOVERY_VERSION }}",
@@ -91,7 +84,9 @@ APP_NAME = "discovery"
 
 # Automount /openedx/discovery folder from the container
 @tutor_hooks.Filters.COMPOSE_MOUNTS.add()
-def _mount_course_discovery(mounts, name):
+def _mount_course_discovery(
+    mounts: list[tuple[str, str]], name: str
+) -> list[tuple[str, str]]:
     if name == REPO_NAME:
         mounts.append((APP_NAME, "/openedx/discovery"))
     return mounts
@@ -99,7 +94,9 @@ def _mount_course_discovery(mounts, name):
 
 # Bind-mount repo at build-time, both for prod and dev images
 @tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
-def _mount_course_discovery_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
+def _mount_course_discovery_on_build(
+    mounts: list[tuple[str, str]], host_path: str
+) -> list[tuple[str, str]]:
     path_basename = os.path.basename(host_path)
     if path_basename == REPO_NAME:
         mounts.append((APP_NAME, f"{APP_NAME}-src"))
@@ -143,7 +140,9 @@ tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
 
 
 @tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
-def _print_discovery_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
+def _print_discovery_public_hosts(
+    hosts: list[str], context_name: t.Literal["local", "dev"]
+) -> list[str]:
     if context_name == "dev":
         hosts += ["{{ DISCOVERY_HOST }}:8381"]
     else:
