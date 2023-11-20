@@ -6,8 +6,13 @@ import pkg_resources
 import typing as t
 
 from tutor import hooks as tutor_hooks
+from tutor.__about__ import __version_suffix__
 
 from .__about__ import __version__
+
+# Handle version suffix in nightly mode, just like tutor core
+if __version_suffix__:
+    __version__ += "-" + __version_suffix__
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
