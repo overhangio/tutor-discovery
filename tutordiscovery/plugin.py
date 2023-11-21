@@ -38,6 +38,8 @@ config = {
         "CACHE_REDIS_DB": "{{ OPENEDX_CACHE_REDIS_DB }}",
         "ATLAS_PULL": False,
         "EXTRA_PIP_REQUIREMENTS": [],
+        "REPOSITORY": "https://github.com/openedx/course-discovery.git",
+        "REPOSITORY_VERSION": "{{ OPENEDX_COMMON_VERSION }}",
     },
 }
 
