@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from glob import glob
 import os
-import pkg_resources
 import typing as t
+from glob import glob
 
+import pkg_resources
 from tutor import hooks as tutor_hooks
 from tutor.__about__ import __version_suffix__
 
@@ -15,15 +15,10 @@ if __version_suffix__:
     __version__ += "-" + __version_suffix__
 
 HERE = os.path.abspath(os.path.dirname(__file__))
+REPO_NAME = "course-discovery"
+APP_NAME = "discovery"
 
-
-config = {
-    "unique": {
-        "MYSQL_PASSWORD": "{{ 8|random_string }}",
-        "SECRET_KEY": "{{ 20|random_string }}",
-        "OAUTH2_SECRET": "{{ 8|random_string }}",
-        "OAUTH2_SECRET_SSO": "{{ 8|random_string }}",
-    },
+config: t.Dict[str, t.Dict[str, t.Any]] = {
     "defaults": {
         "VERSION": __version__,
         "DOCKER_IMAGE": "{{ DOCKER_REGISTRY}}overhangio/openedx-discovery:{{ DISCOVERY_VERSION }}",
@@ -40,6 +35,12 @@ config = {
         "EXTRA_PIP_REQUIREMENTS": [],
         "REPOSITORY": "https://github.com/openedx/course-discovery.git",
         "REPOSITORY_VERSION": "{{ OPENEDX_COMMON_VERSION }}",
+    },
+    "unique": {
+        "MYSQL_PASSWORD": "{{ 8|random_string }}",
+        "SECRET_KEY": "{{ 20|random_string }}",
+        "OAUTH2_SECRET": "{{ 8|random_string }}",
+        "OAUTH2_SECRET_SSO": "{{ 8|random_string }}",
     },
 }
 
@@ -86,13 +87,11 @@ tutor_hooks.Filters.IMAGES_PUSH.add_item(
 )
 
 
-REPO_NAME = "course-discovery"
-APP_NAME = "discovery"
-
-
 # Automount /openedx/discovery folder from the container
 @tutor_hooks.Filters.COMPOSE_MOUNTS.add()
-def _mount_course_discovery(mounts, name):
+def _mount_course_discovery(
+    mounts: list[tuple[str, str]], name: str
+) -> list[tuple[str, str]]:
     if name == REPO_NAME:
         mounts.append((APP_NAME, "/openedx/discovery"))
     return mounts
@@ -100,7 +99,9 @@ def _mount_course_discovery(mounts, name):
 
 # Bind-mount repo at build-time, both for prod and dev images
 @tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()
-def _mount_course_discovery_on_build(mounts: list[tuple[str, str]], host_path: str) -> list[tuple[str, str]]:
+def _mount_course_discovery_on_build(
+    mounts: list[tuple[str, str]], host_path: str
+) -> list[tuple[str, str]]:
     path_basename = os.path.basename(host_path)
     if path_basename == REPO_NAME:
         mounts.append((APP_NAME, f"{APP_NAME}-src"))
@@ -108,7 +109,6 @@ def _mount_course_discovery_on_build(mounts: list[tuple[str, str]], host_path: s
     return mounts
 
 
-####### Boilerplate code
 # Add the "templates" folder as a template root
 tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
     pkg_resources.resource_filename("tutordiscovery", "templates")
@@ -144,7 +144,9 @@ tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
 
 
 @tutor_hooks.Filters.APP_PUBLIC_HOSTS.add()
-def _print_discovery_public_hosts(hosts: list[str], context_name: t.Literal["local", "dev"]) -> list[str]:
+def _print_discovery_public_hosts(
+    hosts: list[str], context_name: t.Literal["local", "dev"]
+) -> list[str]:
     if context_name == "dev":
         hosts += ["{{ DISCOVERY_HOST }}:8381"]
     else:
