@@ -1,7 +1,7 @@
-Course Discovery plugin for `Tutor <https://docs.tutor.overhang.io>`_
+Course Discovery plugin for `Tutor <https://docs.tutor.edly.io>`_
 =====================================================================
 
-This is a plugin for `Tutor <https://docs.tutor.overhang.io>`_ that integrates the `Course Discovery <https://github.com/edx/course-discovery/>`__ application in an Open edX platform. it is useful for integration with, for example, `Ecommerce <https://github.com/edx/ecommerce>`__ or an external course catalog.
+This is a plugin for `Tutor <https://docs.tutor.edly.io>`_ that integrates the `Course Discovery <https://github.com/edx/course-discovery/>`__ application in an Open edX platform. it is useful for integration with, for example, `Ecommerce <https://github.com/edx/ecommerce>`__ or an external course catalog.
 
 Installation
 ------------
@@ -107,7 +107,7 @@ Once a local repository is mounted in the image, you will have to install nodejs
 Troubleshooting
 ---------------
 
-This Tutor plugin is maintained by Muhammad Faraz Maqsood from `Edly <https://edly.io/>`__. Community support is available from the official `Open edX forum <https://discuss.openedx.org>`__. Do you need help with this plugin? See the `troubleshooting <https://docs.tutor.overhang.io/troubleshooting.html>`__ section from the Tutor documentation.
+This Tutor plugin is maintained by Muhammad Faraz Maqsood from `Edly <https://edly.io/>`__. Community support is available from the official `Open edX forum <https://discuss.openedx.org>`__. Do you need help with this plugin? See the `troubleshooting <https://docs.tutor.edly.io/troubleshooting.html>`__ section from the Tutor documentation.
 
 
 `Max retries exceeded with url`

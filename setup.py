@@ -17,9 +17,9 @@ with io.open(
 setup(
     name="tutor-discovery",
     version=about["__version__"],
-    url="https://docs.tutor.overhang.io/",
+    url="https://docs.tutor.edly.io/",
     project_urls={
-        "Documentation": "https://docs.tutor.overhang.io/",
+        "Documentation": "https://docs.tutor.edly.io/",
         "Code": "https://github.com/overhangio/tutor-discovery",
         "Issue tracker": "https://github.com/overhangio/tutor-discovery/issues",
         "Community": "https://discuss.openedx.org",
