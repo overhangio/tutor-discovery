@@ -16,4 +16,7 @@ SOCIAL_AUTH_EDX_OAUTH2_LOGOUT_URL = SOCIAL_AUTH_EDX_OAUTH2_ISSUER + "/logout"
 # Disable API caching, which makes it a pain to troubleshoot issues
 USE_API_CACHING = False
 
+DISCOVERY_BASE_URL = "{{ DISCOVERY_DEV_BASE_URL }}"
+MEDIA_URL = "{{ DISCOVERY_DEV_MEDIA_URL }}"
+
 {{ patch("discovery-development-settings") }}

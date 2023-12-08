@@ -34,6 +34,8 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "EXTRA_PIP_REQUIREMENTS": [],
         "REPOSITORY": "https://github.com/openedx/course-discovery.git",
         "REPOSITORY_VERSION": "{{ OPENEDX_COMMON_VERSION }}",
+        "DEV_BASE_URL": "http://{{DISCOVERY_HOST}}:8381",
+        "DEV_MEDIA_URL": "http://{{DISCOVERY_HOST}}:8381/media/"
     },
     "unique": {
         "MYSQL_PASSWORD": "{{ 8|random_string }}",
@@ -41,6 +43,10 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "OAUTH2_SECRET": "{{ 8|random_string }}",
         "OAUTH2_SECRET_SSO": "{{ 8|random_string }}",
     },
+    "overrides": {
+        "DISCOVERY_BASE_URL": "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}",
+        "MEDIA_URL": "{{ DISCOVERY_BASE_URL }}/media",
+    }
 }
 
 # Initialization tasks
