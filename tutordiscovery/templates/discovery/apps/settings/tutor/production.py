@@ -15,4 +15,7 @@ SOCIAL_AUTH_EDX_OAUTH2_LOGOUT_URL = SOCIAL_AUTH_EDX_OAUTH2_ISSUER + "/logout"
 
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = {% if ENABLE_HTTPS %}True{% else %}False{% endif %}
 
+DISCOVERY_BASE_URL = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}"
+MEDIA_URL = DISCOVERY_BASE_URL + "/media/"
+
 {{ patch("discovery-production-settings") }}
