@@ -19,6 +19,13 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-16.0.2'></a>
+## v16.0.2 (2023-12-09)
+
+- [Improvement] Added Typing to code, Makefile and test action to the repository and formatted code with Black and isort. (by @CodeWithEmad)
+- [Improvement] Introduced Course Discovery Repository and Version settings. (by @Faraz32123)
+- [BugFix] Fix base url for discovery media files, including program banner images. (by @Faraz32123)
+
 <a id='changelog-16.0.1'></a>
 ## v16.0.1 (2023-11-08)
 
