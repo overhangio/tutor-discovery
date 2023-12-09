@@ -30,11 +30,11 @@ Operations
 Creating a user
 ~~~~~~~~~~~~~~~
 
-The discovery user interface will be available at http://discovery.local.overhang.io for a local test instance, and at ``DISCOVERY_HOST`` (by default: http(s)://discovery.<your lms host>) in production. In order to run commands from the UI, a user must be created::
+The discovery user interface will be available at http://discovery.local.edly.io for a local test instance, and at ``DISCOVERY_HOST`` (by default: http(s)://discovery.<your lms host>) in production. In order to run commands from the UI, a user must be created::
 
     tutor local run discovery ./manage.py createsuperuser
 
-Then, you must login with this user at http://discovery.local.overhang.io/admin.
+Then, you must login with this user at http://discovery.local.edly.io/admin.
 
 Alternatively, you can login with oauth2 using a pre-existing user created on the LMS/CMS by accessing http(s)://discovery.<your lms host>/login. To do so, the proper domain names must exist and point to the production server.
 
@@ -71,10 +71,10 @@ Then run the below command, this command will cause errors every time as it trie
 
     tutor local run lms ./manage.py lms cache_programs
 
-If you don't want the errors, then make use of an extra argument to the command .i.e. ``--domain``. This argument will be equal to ``local.overhang.io`` if you are running tutor local and ``local.overhang.io:8000`` if you are running tutor dev::
-    tutor local run lms ./manage.py lms cache_programs --domain="local.overhang.io"
+If you don't want the errors, then make use of an extra argument to the command .i.e. ``--domain``. This argument will be equal to ``local.edly.io`` if you are running tutor local and ``local.edly.io:8000`` if you are running tutor dev::
+    tutor local run lms ./manage.py lms cache_programs --domain="local.edly.io"
     or
-    tutor dev run lms ./manage.py lms cache_programs --domain="local.overhang.io:8000"
+    tutor dev run lms ./manage.py lms cache_programs --domain="local.edly.io:8000"
 
 This last step should be performed every time you create new or make changes to existing programs.
 
@@ -97,7 +97,7 @@ To debug the course discovery service, you are encouraged to mount the course-di
 
     tutor dev start --mount /path/to/course-discovery/ discovery
 
-You can then access the development server at http://discovery.local.overhang.io:8381. Feel free to add breakpoints (``import pdb; pdb.set_trace()``) anywhere in your source code to debug your application.
+You can then access the development server at http://discovery.local.edly.io:8381. Feel free to add breakpoints (``import pdb; pdb.set_trace()``) anywhere in your source code to debug your application.
 
 Once a local repository is mounted in the image, you will have to install nodejs dependencies and collect static assets::
 
