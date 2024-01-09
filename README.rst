@@ -72,6 +72,23 @@ If you don't want the errors, then make use of an extra argument to the command 
 
 This last step should be performed every time you create new or make changes to existing programs.
 
+Show Programs Tab
+~~~~~~~~~~~~~~~~
+
+In order to show programs tab in the LMS dashboard, users will need to manually create an entry in ``Programs api config`` model in LMS Admin Panel. Go to http://local.edly.io/admin/programs/programsapiconfig/. Add ``Marketing path`` equal to ``/programs`` and enable it. Then Programs tab will be shown on the LMS where users can view their registered programs. It will show like as in below picture.
+
+.. image:: https://github.com/overhangio/tutor-discovery/assets/122095701/e0224011-adc0-41e4-a104-af4cb0c24b82
+    :alt: Programs Tab on LMS dashboard
+
+In the above image, User can see explore programs button which is pointing to ``http://localhost:8080/programs`` by default. This link does not exist. So, users can change this link to their custom build marketing site url to show all programs there. This can be done by modifying ``Site Configurations`` model in LMS Admin Panel. Go to http://local.edly.io/site_configuration/siteconfiguration/. Open respective LMS site configuration and add below dict in ``site values`` field like below image::
+
+    "MKTG_URLS": {
+        "ROOT": "https://custom-marketing-site-here.com"
+    }
+
+.. image:: https://github.com/overhangio/tutor-discovery/assets/122095701/2d588ea9-a830-40b6-9845-8fab56d7cb5a
+    :alt: Add Custom Site for Explore Programs
+
 Install extra requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
