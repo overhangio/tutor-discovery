@@ -4,7 +4,7 @@ import os
 import typing as t
 from glob import glob
 
-import pkg_resources
+import importlib_resources
 from tutor import hooks as tutor_hooks
 from tutor.__about__ import __version_suffix__
 
@@ -50,7 +50,7 @@ init_tasks = ("mysql", "lms", "discovery")
 for service in init_tasks:
     with open(
         os.path.join(
-            pkg_resources.resource_filename("tutordiscovery", "templates"),
+            str(importlib_resources.files("tutordiscovery") / "templates"),
             "discovery",
             "tasks",
             service,
@@ -112,7 +112,7 @@ def _mount_course_discovery_on_build(
 
 # Add the "templates" folder as a template root
 tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
-    pkg_resources.resource_filename("tutordiscovery", "templates")
+    str(importlib_resources.files("tutordiscovery") / "templates")
 )
 # Render the "build" and "apps" folders
 tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
@@ -124,7 +124,7 @@ tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 # Load patches from files
 for path in glob(
     os.path.join(
-        pkg_resources.resource_filename("tutordiscovery", "patches"),
+        str(importlib_resources.files("tutordiscovery") / "patches"),
         "*",
     )
 ):
