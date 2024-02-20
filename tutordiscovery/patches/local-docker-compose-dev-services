@@ -4,6 +4,10 @@ discovery:
   command: ./manage.py runserver 0.0.0.0:8381
   stdin_open: true
   tty: true
+  volumes:
+    {%- for mount in iter_mounts(MOUNTS, "discovery") %}
+    - {{ mount }}
+    {%- endfor %}
   ports:
     - "8381:8381"
   networks:
