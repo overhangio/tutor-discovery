@@ -7,7 +7,7 @@ on:
 
 jobs:
   # https://github.com/actions/add-to-project
-  add-to-proje
+  add-to-project:
     name: Add issue and bugs to project
     runs-on: ubuntu-latest
     steps:
