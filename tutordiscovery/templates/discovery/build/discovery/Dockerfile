@@ -73,6 +73,9 @@ RUN python manage.py compilemessages
 COPY --chown=app:app assets.py ./course_discovery/settings/assets.py
 RUN DJANGO_SETTINGS_MODULE=course_discovery.settings.assets make static
 
+# Create media directory to serve media files
+RUN mkdir course_discovery/media
+
 # Run production server
 ENV DJANGO_SETTINGS_MODULE course_discovery.settings.tutor.production
 EXPOSE 8000
