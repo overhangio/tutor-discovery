@@ -80,7 +80,7 @@ In order to show programs tab in the LMS dashboard, users will need to manually 
 .. image:: https://github.com/overhangio/tutor-discovery/assets/122095701/e0224011-adc0-41e4-a104-af4cb0c24b82
     :alt: Programs Tab on LMS dashboard
 
-In the above image, User can see explore programs button which is pointing to ``http://localhost:8080/programs`` by default. This link does not exist. So, users can change this link to their custom build marketing site url to show all programs there. This can be done by modifying ``Site Configurations`` model in LMS Admin Panel. Go to http://local.edly.io/site_configuration/siteconfiguration/. Open respective LMS site configuration and add below dict in ``site values`` field like below image::
+In the above image, User can see explore programs button which is pointing to ``http://localhost:8080/programs`` by default. This link does not exist. So, users can change this link to their custom build marketing site url to show all programs there. This can be done by modifying ``Site Configurations`` model in LMS Admin Panel. Go to http://local.edly.io/admin/site_configuration/siteconfiguration/. Open respective LMS site configuration and add below dict in ``site values`` field like below image::
 
     "MKTG_URLS": {
         "ROOT": "https://custom-marketing-site-here.com"
