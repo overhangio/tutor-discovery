@@ -19,6 +19,14 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-17.0.1'></a>
+## v17.0.1 (2024-04-25)
+
+- [Bugfix] Make plugin compatible with Python 3.12 by removing dependency on `pkg_resources`. (by @regisb)
+- [Feature] Make it possible to use mounts for a local development. (by @cmltawt0)
+- [Bugfix] Fix volumes empty list error during tutor dev launch. (by @Faraz32123)
+- [Bugfix] Fix the docker image to allow media files to be served by uwsgi. (by @angonz)
+
 <a id='changelog-17.0.0'></a>
 ## v17.0.0 (2023-12-09)
 
@@ -37,6 +45,5 @@ instructions, because git commits are used to generate release notes:
 ## v16.0.1 (2023-11-08)
 
 - [Improvement] Add a scriv-compliant changelog. (by @regisb)
-
 - [BugFix] Corrected variable name for installing extra pip requirements. (by @Faraz32123)
 
