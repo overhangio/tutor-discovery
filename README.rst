@@ -73,7 +73,7 @@ If you don't want the errors, then make use of an extra argument to the command 
 This last step should be performed every time you create new or make changes to existing programs.
 
 Show Programs Tab
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 In order to show programs tab in the LMS dashboard, users will need to manually create an entry in ``Programs api config`` model in LMS Admin Panel. Go to http://local.edly.io/admin/programs/programsapiconfig/. Add ``Marketing path`` equal to ``/programs`` and enable it. Then Programs tab will be shown on the LMS where users can view their registered programs. It will show like as in below picture.
 
