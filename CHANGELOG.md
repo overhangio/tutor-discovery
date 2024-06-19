@@ -19,6 +19,13 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-18.0.0'></a>
+## v18.0.0 (2024-05-14)
+
+- 💥[Feature] Upgrade to Redwood. (by @Faraz32123)
+- 💥[Feature] Upgrade Python version to 3.12.2. (by @Faraz32123)
+- [BugFix] Fix wrong mime type by adding mime-support dependency. (by @Faraz32123)
+
 <a id='changelog-17.0.1'></a>
 ## v17.0.1 (2024-04-25)
 
