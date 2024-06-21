@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 ###### Minimal image with base system requirements for most stages
-FROM docker.io/ubuntu:20.04 as minimal
+FROM docker.io/ubuntu:20.04 AS minimal
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt install -y curl git-core gettext language-pack-en \
     build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev \
     pkg-config libsqlite3-dev mime-support
-ENV LC_ALL en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 ARG APP_USER_ID=1000
 RUN if [ "$APP_USER_ID" = 0 ]; then echo "app user may not be root" && false; fi
@@ -25,13 +25,13 @@ WORKDIR /openedx/discovery
 
 # Setup empty yml config file, which is required by production settings
 RUN echo "{}" > /openedx/config.yml
-ENV DISCOVERY_CFG /openedx/config.yml
+ENV DISCOVERY_CFG=/openedx/config.yml
 
 # Install pyenv
 # https://www.python.org/downloads/
 # https://github.com/pyenv/pyenv/releases
 ARG PYTHON_VERSION=3.12.2
-ENV PYENV_ROOT /opt/pyenv
+ENV PYENV_ROOT=/opt/pyenv
 # root user is required for below 2 steps, as app user gets permission denied.
 USER root
 RUN git clone https://github.com/pyenv/pyenv $PYENV_ROOT --branch v2.3.36 --depth 1
@@ -41,7 +41,7 @@ USER app
 
 # Create virtualenv
 RUN $PYENV_ROOT/versions/$PYTHON_VERSION/bin/python -m venv /openedx/venv
-ENV PATH "/openedx/venv/bin:$PATH"
+ENV PATH=/openedx/venv/bin:$PATH
 
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     # https://pypi.org/project/setuptools/
@@ -53,7 +53,7 @@ RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
 RUN pip install nodeenv==1.8.0
 # nodejs version picked from https://github.com/openedx/course-discovery/blob/master/Dockerfile
 RUN nodeenv /openedx/nodeenv --node=16.14.2 --prebuilt
-ENV PATH /openedx/nodeenv/bin:${PATH}
+ENV PATH=/openedx/nodeenv/bin:${PATH}
 
 # Install python and nodejs requirements
 # This is identical to "make production-requirements" but it was split in multiple
@@ -89,7 +89,7 @@ RUN DJANGO_SETTINGS_MODULE=course_discovery.settings.assets make static
 RUN mkdir course_discovery/media
 
 # Run production server
-ENV DJANGO_SETTINGS_MODULE course_discovery.settings.tutor.production
+ENV DJANGO_SETTINGS_MODULE=course_discovery.settings.tutor.production
 EXPOSE 8000
 CMD uwsgi \
     --static-map /static=/openedx/discovery/course_discovery/assets \
