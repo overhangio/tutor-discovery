@@ -86,10 +86,7 @@ COPY --chown=app:app assets.py ./course_discovery/settings/assets.py
 RUN DJANGO_SETTINGS_MODULE=course_discovery.settings.assets make static
 
 # Create media directory to serve media files
-# have to change user at this step, as it gives permission error
-User app
 RUN mkdir course_discovery/media
-User root
 
 # Run production server
 ENV DJANGO_SETTINGS_MODULE=course_discovery.settings.tutor.production
