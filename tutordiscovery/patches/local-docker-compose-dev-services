@@ -4,8 +4,9 @@ discovery:
   command: ./manage.py runserver 0.0.0.0:8381
   stdin_open: true
   tty: true
-  {%- for mount in iter_mounts(MOUNTS, "discovery") %}
   volumes:
+    - ../../data/discovery-media:/openedx/discovery/course_discovery/media
+  {%- for mount in iter_mounts(MOUNTS, "discovery") %}
     - {{ mount }}
   {%- endfor %}
   ports:

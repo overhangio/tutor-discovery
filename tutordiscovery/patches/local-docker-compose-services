@@ -5,6 +5,7 @@ discovery:
   restart: unless-stopped
   volumes:
     - ../plugins/discovery/apps/settings/tutor:/openedx/discovery/course_discovery/settings/tutor:ro
+    - ../../data/discovery-media:/openedx/discovery/course_discovery/media
   depends_on: 
     - lms
     {% if RUN_MYSQL %}- mysql{% endif %}
