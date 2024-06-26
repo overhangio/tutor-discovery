@@ -5,7 +5,7 @@ discovery:
   stdin_open: true
   tty: true
   volumes:
-    - ../../data/discovery-media:/openedx/discovery/course_discovery/media
+    - ../../data/discovery/media:/openedx/discovery/course_discovery/media
   {%- for mount in iter_mounts(MOUNTS, "discovery") %}
     - {{ mount }}
   {%- endfor %}
