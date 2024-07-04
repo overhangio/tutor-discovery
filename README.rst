@@ -47,10 +47,15 @@ names by configuring ``DISCOVERY_INDEX_OVERRIDES``::
 Re-indexing courses
 ~~~~~~~~~~~~~~~~~~~
 
-::
+While running tutor in production mode::
 
     tutor local run discovery ./manage.py refresh_course_metadata --partner_code=openedx
     tutor local run discovery ./manage.py update_index --disable-change-limit
+
+While running tutor in development mode::
+
+    tutor dev run discovery ./manage.py refresh_course_metadata --partner_code=dev
+    tutor dev run discovery ./manage.py update_index --disable-change-limit
 
 Caching programs
 ~~~~~~~~~~~~~~~~
@@ -65,9 +70,13 @@ Then run the below command, this command will cause errors every time as it trie
 
     tutor local run lms ./manage.py lms cache_programs
 
-If you don't want the errors, then make use of an extra argument to the command .i.e. ``--domain``. This argument will be equal to ``local.edly.io`` if you are running tutor local and ``local.edly.io:8000`` if you are running tutor dev::
+Above command will give some errors as it tries to cache programs for all sites. So make use of an extra argument to the command .i.e. ``--domain``.
+While running tutor in production mode::
+
     tutor local run lms ./manage.py lms cache_programs --domain="local.edly.io"
-    or
+
+While running tutor in development mode::
+
     tutor dev run lms ./manage.py lms cache_programs --domain="local.edly.io:8000"
 
 This last step should be performed every time you create new or make changes to existing programs.
@@ -75,7 +84,7 @@ This last step should be performed every time you create new or make changes to 
 Show Programs Tab
 ~~~~~~~~~~~~~~~~~
 
-In order to show programs tab in the LMS dashboard, users will need to manually create an entry in ``Programs api config`` model in LMS Admin Panel. Go to http://local.edly.io/admin/programs/programsapiconfig/. Add ``Marketing path`` equal to ``/programs`` and enable it. Then Programs tab will be shown on the LMS where users can view their registered programs. It will show like as in below picture.
+In order to make ``Programs`` tab work in the LMS dashboard, users will need to manually create an entry in ``Programs api config`` model in LMS Admin Panel. Go to http://local.edly.io/admin/programs/programsapiconfig/. Add ``Marketing path`` equal to ``/programs`` and enable it. Then Programs tab will be shown on the LMS where users can view their registered programs. It will show like as in below picture.
 
 .. image:: https://github.com/overhangio/tutor-discovery/assets/122095701/e0224011-adc0-41e4-a104-af4cb0c24b82
     :alt: Programs Tab on LMS dashboard
