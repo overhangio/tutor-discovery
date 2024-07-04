@@ -1,14 +1,16 @@
 # syntax=docker/dockerfile:1.4
 ###### Minimal image with base system requirements for most stages
-FROM docker.io/ubuntu:20.04 AS minimal
+FROM docker.io/python:3.12-slim-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
-    apt install -y curl git-core gettext language-pack-en \
-    build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev \
-    pkg-config libsqlite3-dev mime-support
+    apt upgrade -y locales git python3-dev \
+      default-libmysqlclient-dev build-essential libcairo2 \
+      libjpeg-dev libssl-dev pkg-config libsqlite3-dev mime-support && \
+    sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen
 ENV LC_ALL=en_US.UTF-8
 
 ARG APP_USER_ID=1000
@@ -27,20 +29,8 @@ WORKDIR /openedx/discovery
 RUN echo "{}" > /openedx/config.yml
 ENV DISCOVERY_CFG=/openedx/config.yml
 
-# Install pyenv
-# https://www.python.org/downloads/
-# https://github.com/pyenv/pyenv/releases
-ARG PYTHON_VERSION=3.12.2
-ENV PYENV_ROOT=/opt/pyenv
-# root user is required for below 2 steps, as app user gets permission denied.
-USER root
-RUN git clone https://github.com/pyenv/pyenv $PYENV_ROOT --branch v2.3.36 --depth 1
-# Install Python
-RUN $PYENV_ROOT/bin/pyenv install $PYTHON_VERSION
-USER app
-
 # Create virtualenv
-RUN $PYENV_ROOT/versions/$PYTHON_VERSION/bin/python -m venv /openedx/venv
+RUN python -m venv /openedx/venv
 ENV PATH=/openedx/venv/bin:$PATH
 
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
