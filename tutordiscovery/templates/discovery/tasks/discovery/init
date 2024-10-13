@@ -6,8 +6,8 @@ make migrate
   --site-domain {{ DISCOVERY_HOST }}:8381 \
   --code dev \
   --name "Open edX - development" \
-  --lms-url="http://lms:8000" \
-  --studio-url="http://cms:8000" \
+  --lms-url="http://{{ LMS_HOST }}:8000" \
+  --studio-url="http://{{ CMS_HOST }}:8000" \
   --courses-api-url "http://{{ LMS_HOST }}:8000/api/courses/v1/" \
   --organizations-api-url "http://{{ LMS_HOST }}:8000/api/organizations/v1/"
 
@@ -17,8 +17,8 @@ make migrate
   --site-domain {{ DISCOVERY_HOST }} \
   --code openedx \
   --name "Open edX" \
-  --lms-url="http://lms:8000" \
-  --studio-url="http://cms:8000" \
+  --lms-url="http://{{ LMS_HOST }}:8000" \
+  --studio-url="http://{{ CMS_HOST }}:8000" \
   --courses-api-url "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/api/courses/v1/" \
   --organizations-api-url "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/api/organizations/v1/"
 
