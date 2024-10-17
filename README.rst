@@ -38,7 +38,7 @@ Operations
 Creating a user
 ~~~~~~~~~~~~~~~
 
-The discovery user interface will be available at http://discovery.local.edly.io for a local test instance,
+The discovery user interface will be available at http://discovery.local.openedx.io for a local test instance,
 and at ``DISCOVERY_HOST`` (by default: http(s)://discovery.<your lms host>) in production. To run
 commands from the UI, a user must be created:
 
@@ -46,7 +46,7 @@ commands from the UI, a user must be created:
 
     tutor local run discovery ./manage.py createsuperuser
 
-Then, you must log in with this user at http://discovery.local.edly.io/admin.
+Then, you must log in with this user at http://discovery.local.openedx.io/admin.
 
 Alternatively, you can log in with oauth2 using a pre-existing user created on the LMS/CMS by accessing
 http(s)://discovery.<your lms host>/login. To do so, the proper domain names must exist and point to
@@ -108,13 +108,13 @@ extra argument to the command. i.e. ``--domain``. While running tutor in product
 
 .. code-block:: bash
 
-    tutor local run lms ./manage.py lms cache_programs --domain="local.edly.io"
+    tutor local run lms ./manage.py lms cache_programs --domain="local.openedx.io"
 
 While running tutor in development mode:
 
 .. code-block:: bash
 
-    tutor dev run lms ./manage.py lms cache_programs --domain="local.edly.io:8000"
+    tutor dev run lms ./manage.py lms cache_programs --domain="local.openedx.io:8000"
 
 This last step should be performed every time you create new or make changes to existing programs.
 
@@ -122,7 +122,7 @@ Show Programs Tab
 ~~~~~~~~~~~~~~~~~
 
 To make the ``Programs`` tab work in the LMS dashboard, users will need to manually create an entry
-in the ``Programs api config`` model in the LMS Admin Panel. Go to http://local.edly.io/admin/programs/programsapiconfig/.
+in the ``Programs api config`` model in the LMS Admin Panel. Go to http://local.openedx.io/admin/programs/programsapiconfig/.
 Add ``Marketing path`` equal to ``/programs`` and enable it. Then Programs tab will be shown on the LMS
 where users can view their registered programs. It will show like in the below picture.
 
@@ -132,7 +132,7 @@ where users can view their registered programs. It will show like in the below p
 In the above image, the user can see explore programs button which is pointing to ``http://localhost:8080/programs`` by default.
 This link does not exist. So, users can change this link to their custom-built marketing site URL to show all programs there.
 This can be done by modifying the ``Site Configurations`` model in the LMS Admin Panel. Go to
-http://local.edly.io/admin/site_configuration/siteconfiguration/. Open the respective LMS site configuration and add the below
+http://local.openedx.io/admin/site_configuration/siteconfiguration/. Open the respective LMS site configuration and add the below
 dictionary in ``site values`` field like the below image:
 
 .. code-block:: python
@@ -169,7 +169,7 @@ in the development container:
 
     tutor dev start --mount /path/to/course-discovery/ discovery
 
-You can then access the development server at http://discovery.local.edly.io:8381. Feel free to add breakpoints
+You can then access the development server at http://discovery.local.openedx.io:8381. Feel free to add breakpoints
 (``import pdb; pdb.set_trace()``) anywhere in your source code to debug your application.
 
 Once a local repository is mounted in the image, you will have to install nodejs dependencies and collect static assets:
