@@ -3,6 +3,10 @@
 FROM docker.io/ubuntu:24.04 AS minimal
 
 ENV DEBIAN_FRONTEND=noninteractive
+
+# Delete default UID=1000 `ubuntu` user to ensure we can use id 1000 for app user
+RUN userdel -r ubuntu
+
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
@@ -11,7 +15,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     pkg-config libsqlite3-dev media-types mailcap
 ENV LC_ALL=en_US.UTF-8
 
-ARG APP_USER_ID=1001
+ARG APP_USER_ID=1000
 RUN if [ "$APP_USER_ID" = 0 ]; then echo "app user may not be root" && false; fi
 RUN useradd --home-dir /openedx --create-home --shell /bin/bash --uid ${APP_USER_ID} app
 USER ${APP_USER_ID}
