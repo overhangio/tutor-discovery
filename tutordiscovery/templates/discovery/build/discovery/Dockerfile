@@ -3,8 +3,6 @@
 FROM docker.io/ubuntu:22.04 AS minimal
 
 ENV DEBIAN_FRONTEND=noninteractive
-
-
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
