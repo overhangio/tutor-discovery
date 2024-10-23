@@ -1,11 +1,9 @@
 # syntax=docker/dockerfile:1.4
 ###### Minimal image with base system requirements for most stages
-FROM docker.io/ubuntu:24.04 AS minimal
+FROM docker.io/ubuntu:22.04 AS minimal
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Delete default UID=1000 `ubuntu` user to ensure we can use id 1000 for app user
-RUN userdel -r ubuntu
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
@@ -102,6 +100,6 @@ CMD ["uwsgi", \
     "--thunder-lock", \
     "--single-interpreter", \
     "--enable-threads", \
-    "--processes=${UWSGI_WORKERS:-2}", \
+    "--processes=2", \
     "--buffer-size=8192", \
     "--wsgi-file", "course_discovery/wsgi.py"]
