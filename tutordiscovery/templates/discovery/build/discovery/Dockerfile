@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 ###### Minimal image with base system requirements for most stages
-FROM docker.io/ubuntu:20.04 AS minimal
+FROM docker.io/ubuntu:22.04 AS minimal
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -8,7 +8,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt update && \
     apt install -y curl git-core gettext language-pack-en \
     build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev \
-    pkg-config libsqlite3-dev mime-support
+    pkg-config libsqlite3-dev media-types mailcap
 ENV LC_ALL=en_US.UTF-8
 
 ARG APP_USER_ID=1000
@@ -91,13 +91,13 @@ RUN mkdir course_discovery/media
 # Run production server
 ENV DJANGO_SETTINGS_MODULE=course_discovery.settings.tutor.production
 EXPOSE 8000
-CMD uwsgi \
-    --static-map /static=/openedx/discovery/course_discovery/assets \
-    --static-map /media=/openedx/discovery/course_discovery/media \
-    --http 0.0.0.0:8000 \
-    --thunder-lock \
-    --single-interpreter \
-    --enable-threads \
-    --processes=2 \
-    --buffer-size=8192 \
-    --wsgi-file course_discovery/wsgi.py
+CMD ["uwsgi", \
+    "--static-map", "/static=/openedx/discovery/course_discovery/assets", \
+    "--static-map", "/media=/openedx/discovery/course_discovery/media", \
+    "--http", "0.0.0.0:8000", \
+    "--thunder-lock", \
+    "--single-interpreter", \
+    "--enable-threads", \
+    "--processes=2", \
+    "--buffer-size=8192", \
+    "--wsgi-file", "course_discovery/wsgi.py"]
