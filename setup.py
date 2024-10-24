@@ -34,8 +34,8 @@ setup(
     long_description_content_type="text/x-rst",
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
-    install_requires=["tutor>=18.0.0,<19.0.0"],
-    extras_require={"dev": "tutor[dev]>=18.0.0,<19.0.0"},
+    install_requires=["tutor>=19.0.0,<20.0.0"],
+    extras_require={"dev": "tutor[dev]>=19.0.0,<20.0.0"},
     python_requires=">=3.8",
     entry_points={"tutor.plugin.v1": ["discovery = tutordiscovery.plugin"]},
     classifiers=[
