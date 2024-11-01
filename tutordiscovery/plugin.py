@@ -36,6 +36,12 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "EXTRA_PIP_REQUIREMENTS": [],
         "REPOSITORY": "https://github.com/openedx/course-discovery.git",
         "REPOSITORY_VERSION": "{{ OPENEDX_COMMON_VERSION }}",
+        "RUN_ELASTICSEARCH": True,
+        "DOCKER_IMAGE_ELASTICSEARCH": "docker.io/elasticsearch:7.17.13",
+        "ELASTICSEARCH_HOST": "elasticsearch",
+        "ELASTICSEARCH_PORT": 9200,
+        "ELASTICSEARCH_SCHEME": "http",
+        "ELASTICSEARCH_HEAP_SIZE": "1g",
     },
     "unique": {
         "MYSQL_PASSWORD": "{{ 8|random_string }}",
