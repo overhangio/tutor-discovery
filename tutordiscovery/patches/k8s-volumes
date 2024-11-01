@@ -1,0 +1,16 @@
+{% if DISCOVERY_RUN_ELASTICSEARCH %}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elasticsearch
+  labels:
+    app.kubernetes.io/component: volume
+    app.kubernetes.io/name: elasticsearch
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+{% endif %}
