@@ -9,6 +9,7 @@ from tutor import hooks as tutor_hooks
 from tutor.__about__ import __version_suffix__
 
 from .__about__ import __version__
+from .utils import is_docker_rootless
 
 # Handle version suffix in nightly mode, just like tutor core
 if __version_suffix__:
@@ -126,6 +127,10 @@ tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
         ("discovery/build", "plugins"),
         ("discovery/apps", "plugins"),
     ],
+)
+# Template variables
+tutor_hooks.Filters.ENV_TEMPLATE_VARIABLES.add_item(
+    ("is_docker_rootless", is_docker_rootless),
 )
 # Load patches from files
 for path in glob(
