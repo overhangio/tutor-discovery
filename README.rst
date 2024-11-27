@@ -218,4 +218,4 @@ License
 
 This work is licensed under the terms of the `GNU Affero General Public License (AGPL)`_.
 
-.. _GNU Affero General Public License (AGPL): https://github.com/overhangio/tutor/blob/master/LICENSE.txt
+.. _GNU Affero General Public License (AGPL): https://github.com/overhangio/tutor/blob/release/LICENSE.txt
