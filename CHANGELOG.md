@@ -19,6 +19,16 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-19.0.0'></a>
+## v19.0.0 (2024-10-23)
+
+- 💥[Feature] Upgrade to Sumac. (by @Faraz32123)
+- 💥[Feature] Update Course Discovery Image to use Ubuntu 22.04 as base OS. (by @hinakhadim)
+- [Bugfix] Fix catalog_service_user permissions and 403 while fetching pathways (by @dyudyunov)
+- [BugFix] Fix images(media) persistance issue by mounting media directory in volumes through patches. (by @Faraz32123)
+- [Bugfix] Fix legacy warnings during Docker build. (by @regisb)
+
+
 <a id='changelog-18.0.0'></a>
 ## v18.0.0 (2024-05-14)
 

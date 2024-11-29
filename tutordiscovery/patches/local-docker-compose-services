@@ -6,7 +6,28 @@ discovery:
   volumes:
     - ../plugins/discovery/apps/settings/tutor:/openedx/discovery/course_discovery/settings/tutor:ro
     - ../../data/discovery/media:/openedx/discovery/course_discovery/media
+    {% if DISCOVERY_RUN_ELASTICSEARCH %}- ../../data/elasticsearch:/mounts/elasticsearch{% endif %}
   depends_on: 
     - lms
     {% if RUN_MYSQL %}- mysql{% endif %}
-    {% if RUN_ELASTICSEARCH %}- elasticsearch{% endif %}
+    {% if DISCOVERY_RUN_ELASTICSEARCH %}- elasticsearch{% endif %}
+
+{% if DISCOVERY_RUN_ELASTICSEARCH -%}
+  elasticsearch:
+    image: {{ DISCOVERY_DOCKER_IMAGE_ELASTICSEARCH }}
+    environment:
+      - cluster.name=openedx
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms{{ DISCOVERY_ELASTICSEARCH_HEAP_SIZE }} -Xmx{{ DISCOVERY_ELASTICSEARCH_HEAP_SIZE }}"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    restart: unless-stopped
+    user: "1000:1000"
+    volumes:
+      - ../../data/elasticsearch:/usr/share/elasticsearch/data
+    depends_on:
+      - permissions
+{%- endif %}

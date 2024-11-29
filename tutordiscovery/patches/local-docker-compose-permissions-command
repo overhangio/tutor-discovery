@@ -1,0 +1,1 @@
+{% if DISCOVERY_RUN_ELASTICSEARCH %}setowner 1000 /mounts/elasticsearch{% endif %}
