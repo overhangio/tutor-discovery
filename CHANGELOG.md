@@ -23,6 +23,13 @@ instructions, because git commits are used to generate release notes:
 ## v19.0.0 (2024-10-23)
 
 - 💥[Feature] Upgrade to Sumac. (by @Faraz32123)
+- [Feature] Add Elasticsearch support in tutor-discovery. As Tutor and Open edX have shifted to Meilisearch, and course-discovery still depends on Elasticsearch, running the Elasticsearch container with tutor-discovery will facilitate smoother operation for the course-discovery service. (by @Faraz32123)
+  - Please see related tutor core PR for context https://github.com/overhangio/tutor/pull/1141
+- 💥 [Deprecation] Drop support for python 3.8 and set Python 3.9 as the minimum supported python version. (by @Faraz32123)
+- 💥[Improvement] Rename Tutor's two branches (by @DawoudSheraz):
+  * Rename **master** to **release**, as this branch runs the latest official Open edX release tag.
+  * Rename **nightly** to **main**, as this branch runs the Open edX master branches, which are the basis for the next Open edX release.
+- [Improvement] Move is_docker_rootless method related to elasticsearch from tutor core to tutor-discovery. (by @Faraz32123)
 - 💥[Feature] Update Course Discovery Image to use Ubuntu 22.04 as base OS. (by @hinakhadim)
 - [Bugfix] Fix catalog_service_user permissions and 403 while fetching pathways (by @dyudyunov)
 - [BugFix] Fix images(media) persistance issue by mounting media directory in volumes through patches. (by @Faraz32123)
