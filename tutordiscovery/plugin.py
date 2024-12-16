@@ -9,6 +9,7 @@ from tutor import hooks as tutor_hooks
 from tutor.__about__ import __version_suffix__
 
 from .__about__ import __version__
+from .utils import is_docker_rootless
 
 # Handle version suffix in main mode, just like tutor core
 if __version_suffix__:
@@ -36,6 +37,12 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "EXTRA_PIP_REQUIREMENTS": [],
         "REPOSITORY": "https://github.com/openedx/course-discovery.git",
         "REPOSITORY_VERSION": "{{ OPENEDX_COMMON_VERSION }}",
+        "RUN_ELASTICSEARCH": True,
+        "DOCKER_IMAGE_ELASTICSEARCH": "docker.io/elasticsearch:7.17.13",
+        "ELASTICSEARCH_HOST": "elasticsearch",
+        "ELASTICSEARCH_PORT": 9200,
+        "ELASTICSEARCH_SCHEME": "http",
+        "ELASTICSEARCH_HEAP_SIZE": "1g",
     },
     "unique": {
         "MYSQL_PASSWORD": "{{ 8|random_string }}",
@@ -120,6 +127,10 @@ tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
         ("discovery/build", "plugins"),
         ("discovery/apps", "plugins"),
     ],
+)
+# Template variables
+tutor_hooks.Filters.ENV_TEMPLATE_VARIABLES.add_item(
+    ("is_docker_rootless", is_docker_rootless),
 )
 # Load patches from files
 for path in glob(

@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 ###### Minimal image with base system requirements for most stages
-FROM docker.io/ubuntu:20.04 AS minimal
+FROM docker.io/ubuntu:22.04 AS minimal
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -8,7 +8,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt update && \
     apt install -y curl git-core gettext language-pack-en \
     build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev \
-    pkg-config libsqlite3-dev mime-support
+    pkg-config libsqlite3-dev media-types mailcap
 ENV LC_ALL=en_US.UTF-8
 
 ARG APP_USER_ID=1000
@@ -47,10 +47,10 @@ RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     # https://pypi.org/project/setuptools/
     # https://pypi.org/project/pip/
     # https://pypi.org/project/wheel/
-    setuptools==69.1.1 pip==24.0 wheel==0.43.0
+    setuptools==75.2.0 pip==24.2 wheel==0.44.0
 
 # Install a recent version of nodejs
-RUN pip install nodeenv==1.8.0
+RUN pip install nodeenv==1.9.1
 # nodejs version picked from https://github.com/openedx/course-discovery/blob/master/Dockerfile
 RUN nodeenv /openedx/nodeenv --node=16.14.2 --prebuilt
 ENV PATH=/openedx/nodeenv/bin:${PATH}
@@ -73,7 +73,7 @@ RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     # Use redis as a django cache https://pypi.org/project/django-redis/
     django-redis==5.4.0 \
     # uwsgi server https://pypi.org/project/uWSGI/
-    uwsgi==2.0.24
+    uwsgi==2.0.27
 
 {% if DISCOVERY_ATLAS_PULL %}
 # Pull translations. Support the OEP-58 proposal behind a feature flag until it's fully implemented.
@@ -91,13 +91,13 @@ RUN mkdir course_discovery/media
 # Run production server
 ENV DJANGO_SETTINGS_MODULE=course_discovery.settings.tutor.production
 EXPOSE 8000
-CMD uwsgi \
-    --static-map /static=/openedx/discovery/course_discovery/assets \
-    --static-map /media=/openedx/discovery/course_discovery/media \
-    --http 0.0.0.0:8000 \
-    --thunder-lock \
-    --single-interpreter \
-    --enable-threads \
-    --processes=2 \
-    --buffer-size=8192 \
-    --wsgi-file course_discovery/wsgi.py
+CMD ["uwsgi", \
+    "--static-map", "/static=/openedx/discovery/course_discovery/assets", \
+    "--static-map", "/media=/openedx/discovery/course_discovery/media", \
+    "--http", "0.0.0.0:8000", \
+    "--thunder-lock", \
+    "--single-interpreter", \
+    "--enable-threads", \
+    "--processes=2", \
+    "--buffer-size=8192", \
+    "--wsgi-file", "course_discovery/wsgi.py"]
