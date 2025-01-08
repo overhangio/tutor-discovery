@@ -8,7 +8,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt update && \
     apt install -y curl git-core gettext language-pack-en \
     build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev \
-    pkg-config libsqlite3-dev media-types mailcap
+    pkg-config libsqlite3-dev media-types mailcap libbz2-dev liblzma-dev
 ENV LC_ALL=en_US.UTF-8
 
 ARG APP_USER_ID=1000
