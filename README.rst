@@ -201,6 +201,16 @@ This entry may be present if you named your server with the LMS hostname.
 
 .. _DigitalOcean: https://digitalocean.com/
 
+
+Using event-bus with tutor-discovery
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Although tutor-discovery does not start event bus consumption by default, it supports running it. To consume events from event bus with tutor-discovery, follow these `instructions`_ provided by `event-bus-redis`_.
+
+.. _instructions: https://github.com/openedx/event-bus-redis/blob/main/docs/tutor_installation.rst
+.. _event-bus-redis: https://github.com/openedx/event-bus-redis
+
+
 Troubleshooting
 ---------------
 
