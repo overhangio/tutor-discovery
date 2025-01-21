@@ -6,6 +6,11 @@
   "from django.contrib.auth import get_user_model;\
   get_user_model().objects.filter(username='lms_catalog_service_user').exclude(email='lms_catalog_service_user@openedx').update(email='lms_catalog_service_user@openedx')"
 
+./manage.py lms shell -c \
+  "from openedx.core.djangoapps.programs.models import ProgramsApiConfig;\
+  ProgramsApiConfig.current().enabled or \
+  ProgramsApiConfig.objects.create(marketing_path='/programs', enabled=True)"
+
 ./manage.py lms manage_user discovery discovery@openedx --staff --superuser --unusable-password
 ./manage.py lms manage_user lms_catalog_service_user lms_catalog_service_user@openedx --staff --unusable-password
 

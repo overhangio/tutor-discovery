@@ -50,6 +50,9 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "OAUTH2_SECRET": "{{ 8|random_string }}",
         "OAUTH2_SECRET_SSO": "{{ 8|random_string }}",
     },
+    "overrides": {
+        "ENABLE_PROGRAMS": True,
+    },
 }
 
 # Initialization tasks

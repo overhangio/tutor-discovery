@@ -121,19 +121,30 @@ This last step should be performed every time you create new or make changes to 
 Show Programs Tab
 ~~~~~~~~~~~~~~~~~
 
-To make the ``Programs`` tab work in the LMS dashboard, users will need to manually create an entry
-in the ``Programs api config`` model in the LMS Admin Panel. Go to http://local.openedx.io/admin/programs/programsapiconfig/.
-Add ``Marketing path`` equal to ``/programs`` and enable it. Then Programs tab will be shown on the LMS
-where users can view their registered programs. It will show like in the below picture.
+By default, the **Programs** tab is available in the LMS dashboard. Users can enable or disable this tab as needed.
+To Disable Programs, run the following command:
+
+.. code-block:: bash
+
+    tutor config save --set ENABLE_PROGRAMS=False
+
+To Enable Programs, run the following command:
+
+.. code-block:: bash
+
+    tutor config save --set ENABLE_PROGRAMS=True
+
+Only programs in which learners are registered will appear on this page. If a learner is enrolled in any course that is part of a program, that program will be displayed here.
 
 .. image:: https://github.com/overhangio/tutor-discovery/assets/122095701/e0224011-adc0-41e4-a104-af4cb0c24b82
     :alt: Programs Tab on LMS dashboard
 
-In the above image, the user can see explore programs button which is pointing to ``http://localhost:8080/programs`` by default.
-This link does not exist. So, users can change this link to their custom-built marketing site URL to show all programs there.
-This can be done by modifying the ``Site Configurations`` model in the LMS Admin Panel. Go to
-http://local.openedx.io/admin/site_configuration/siteconfiguration/. Open the respective LMS site configuration and add the below
-dictionary in ``site values`` field like the below image:
+In the image above, the **Explore Programs** button points to http://localhost:8080/programs by default. This link does not exist, so users can change it to their custom-built marketing site URL to display all programs.
+To Modify the Link:
+
+1. Go to the **Site Configurations** model in the LMS Admin Panel: `http://local.openedx.io/admin/site_configuration/siteconfiguration/`
+2. Open the respective LMS site configuration.
+3. Add the following dictionary in the **site values** field like in the below image:
 
 .. code-block:: python
 
@@ -143,6 +154,11 @@ dictionary in ``site values`` field like the below image:
 
 .. image:: https://github.com/overhangio/tutor-discovery/assets/122095701/2d588ea9-a830-40b6-9845-8fab56d7cb5a
     :alt: Add Custom Site for Explore Programs
+
+By following above instructions, this link (https://custom-marketing-site-here.com) will be replaced by http://localhost:8080. Additionally, users can also replace "/programs" by following these below steps:
+
+1. Go to: `http://local.openedx.io/admin/programs/programsapiconfig/`
+2. Add **Marketing path** equal to "/programs" or your desired marketing site path and enable it.
 
 Install extra requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
