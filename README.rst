@@ -48,9 +48,13 @@ commands from the UI, a user must be created:
 
 Then, you must log in with this user at http://discovery.local.openedx.io/admin.
 
-Alternatively, you can log in with oauth2 using a pre-existing user created on the LMS/CMS by accessing
-http(s)://discovery.<your lms host>/login. To do so, the proper domain names must exist and point to
-the production server.
+Using SSO with LMS
+~~~~~~~~~~~~~~~~~~
+
+If you want to log in using Single Sign-On (SSO) with the LMS, ensure that the superuser you created 
+above in discovery has the same username and email as an existing admin user in the LMS/CMS. You can 
+then access the discovery interface via `http(s)://discovery.<your lms host>/login`. Make sure that 
+the proper domain names are configured and point to the production server.
 
 Index configuration
 ~~~~~~~~~~~~~~~~~~~
