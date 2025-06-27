@@ -19,6 +19,24 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-20.0.0'></a>
+## v20.0.0 (2025-06-05)
+
+- [Bugfix] Add support to consume events from event bus in discovery. Explanation can be viewed here: https://github.com/openedx/event-bus-redis/blob/main/docs/tutor_installation.rst. (by @Faraz32123)
+
+- [Feature] Introduced a new environment variable to enable or disable programs. (by @Faraz32123)
+  - This aligns with the frontend, which now also utilizes this environment variable. To view the frontend related changes, click here: https://github.com/openedx/frontend-app-learner-dashboard/pull/506/files.
+  - Additionally, it automates the enabling of programs in the "programapiconfig" model on the LMS admin panel through init tasks.
+
+- [Improvement] Migrate packaging from setup.py/setuptools to pyproject.toml/hatch. (by @Faraz32123)
+  - For more details view tutor core PR: https://github.com/overhangio/tutor/pull/1163
+
+- [Improvement] Add hatch_build.py in sdist target to fix the installation issues (by @dawoudsheraz)
+
+- [Improvement] Replace site-configuration script with create_or_update_site_configuration management command in the init task. (by @Danyal-Faheem)
+
+- 💥[Feature] Upgrade to Teak. (by @mlabeeb03)
+
 <a id='changelog-19.0.0'></a>
 ## v19.0.0 (2024-10-23)
 

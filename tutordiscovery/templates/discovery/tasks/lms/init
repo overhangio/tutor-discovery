@@ -62,5 +62,5 @@
 # configuration -- which means that it takes different values for different
 # sites. This is important because the programs and courses returned for each
 # site will differ.
-site-configuration set -d {{ LMS_HOST }} COURSE_CATALOG_API_URL {% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}/api/v1
-site-configuration set -d {{ LMS_HOST }}:8000 COURSE_CATALOG_API_URL http://{{ DISCOVERY_HOST }}:8381/api/v1
+./manage.py lms create_or_update_site_configuration {{ LMS_HOST }} --configuration '{"COURSE_CATALOG_API_URL": "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}/api/v1"}' --enabled
+./manage.py lms create_or_update_site_configuration {{ LMS_HOST }}:8000 --configuration '{"COURSE_CATALOG_API_URL": "http://{{ DISCOVERY_HOST }}:8381/api/v1"}' --enabled
