@@ -20,7 +20,7 @@ class UtilsTests(unittest.TestCase):
 
     @patch("subprocess.run")
     def test_is_docker_rootless_podman(self, mock_run: MagicMock) -> None:
-        """Test the `is_docker_rootless` when podman is used or any other error with `docker info`"""
+        """Test the `is_docker_rootless` when podman is used or any other error with `docker info`"""  # noqa: E501
         utils.is_docker_rootless.cache_clear()
         mock_run.side_effect = subprocess.CalledProcessError(1, "docker info")
         self.assertFalse(utils.is_docker_rootless())
