@@ -3,7 +3,7 @@
 SRC_DIRS = ./tutordiscovery ./tests
 
 # Warning: These checks are run on every PR.
-test: test-lint test-types test-format test-unit  # Run some static checks.
+test: test-lint test-types test-format test-unit test-pythonpackage  # Run some static checks.
 
 test-format: ## Run code formatting tests.
 	ruff format --check --diff ${SRC_DIRS}
@@ -17,6 +17,12 @@ test-types: ## Run type checks.
 test-unit: ## Run unit tests
 	python -m unittest discover tests
 
+build-pythonpackage: ## Build the "tutor-discovery" python package for upload to pypi
+	python -m build --sdist
+
+test-pythonpackage: build-pythonpackage ## Test that package can be uploaded to pypi
+	twine check dist/tutor_discovery-$(shell make version).tar.gz
+
 format: ## Format code automatically.
 	ruff format ${SRC_DIRS}
 
@@ -28,6 +34,9 @@ changelog-entry: ## Create a new changelog entry.
 
 changelog: ## Collect changelog entries in the CHANGELOG.md file.
 	scriv collect
+
+version: ## Print the current tutor-discovery version
+	@python -c 'import io, os; about = {}; exec(io.open(os.path.join("tutordiscovery", "__about__.py"), "rt", encoding="utf-8").read(), about); print(about["__version__"])'
 
 ESCAPE = 
 help: ## Print this help.
