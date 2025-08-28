@@ -22,7 +22,7 @@ APP_NAME = "discovery"
 config: t.Dict[str, t.Dict[str, t.Any]] = {
     "defaults": {
         "VERSION": __version__,
-        "DOCKER_IMAGE": "{{ DOCKER_REGISTRY}}overhangio/openedx-discovery:{{ DISCOVERY_VERSION }}",
+        "DOCKER_IMAGE": "{{ DOCKER_REGISTRY}}overhangio/openedx-discovery:{{ DISCOVERY_VERSION }}",  # noqa: E501
         "HOST": "discovery.{{ LMS_HOST }}",
         "INDEX_OVERRIDES": {},
         "MYSQL_DATABASE": "discovery",
