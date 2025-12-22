@@ -47,7 +47,7 @@ RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     # https://pypi.org/project/setuptools/
     # https://pypi.org/project/pip/
     # https://pypi.org/project/wheel/
-    setuptools==77.0.3 pip==25.0.1 wheel==0.45.1
+    setuptools==80.0.0 pip==25.2 wheel==0.45.1
 
 # Install a recent version of nodejs
 RUN pip install nodeenv==1.9.1
@@ -73,7 +73,7 @@ RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     # Use redis as a django cache https://pypi.org/project/django-redis/
     django-redis==5.4.0 \
     # uwsgi server https://pypi.org/project/uWSGI/
-    uwsgi==2.0.28
+    uwsgi==2.0.30
 
 {% if DISCOVERY_ATLAS_PULL %}
 # Pull translations. Support the OEP-58 proposal behind a feature flag until it's fully implemented.
