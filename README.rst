@@ -225,7 +225,7 @@ This entry may be present if you named your server with the LMS hostname.
 Using event-bus with tutor-discovery
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Although tutor-discovery does not start event bus consumption by default, it supports running it. To consume events from event bus with tutor-discovery, follow these `instructions`_ provided by `event-bus-redis`_.
+Event bus is now a part of course-discovery default requirements. So, its settings are also added to tutor-discovery now and we no longer need to manually add settings through plugin as mentioned in event bus `instructions`_. To consume events from event bus with tutor-discovery, run the command mentioned in event bus `instructions`_ provided by `event-bus-redis`_.
 
 .. _instructions: https://github.com/openedx/event-bus-redis/blob/main/docs/tutor_installation.rst
 .. _event-bus-redis: https://github.com/openedx/event-bus-redis

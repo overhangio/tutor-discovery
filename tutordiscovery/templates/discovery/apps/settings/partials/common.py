@@ -99,4 +99,10 @@ EDX_DRF_EXTENSIONS = {
     'OAUTH2_USER_INFO_URL': '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/oauth2/user_info',
 }
 
+# edx-event-bus-redis settings
+EVENT_BUS_PRODUCER = 'edx_event_bus_redis.create_producer'
+EVENT_BUS_REDIS_CONNECTION_URL = 'redis://@redis:6379/'
+EVENT_BUS_TOPIC_PREFIX = 'dev'
+EVENT_BUS_CONSUMER = 'edx_event_bus_redis.RedisEventConsumer'
+
 {{ patch("discovery-common-settings") }}
