@@ -234,7 +234,7 @@ Event bus is now a part of course-discovery default requirements. So, its settin
 Troubleshooting
 ---------------
 
-This Tutor plugin is maintained by Muhammad Labeeb from `Edly`_.
+This Tutor plugin is maintained by Muhammad Faraz Maqsood from `Edly`_.
 Community support is available from the official `Open edX forum`_.
 Do you need help with this plugin? See the `troubleshooting`_
 section from the Tutor documentation.

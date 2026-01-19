@@ -9,8 +9,8 @@ authors = [
   {email = "hello@edly.io"},
 ]
 maintainers = [
-  {name = "Muhammad Labeeb"},
-  {email = "muhammad.labeeb@arbisoft.com"},
+  {name = "Muhammad Faraz Maqsood"},
+  {email = "faraz.maqsood@arbisoft.com"},
 ]
 description="A Tutor plugin for course discovery, the Open edX service for providing access to consolidated course and program metadata"
 readme = {file = "README.rst", content-type = "text/x-rst"}
