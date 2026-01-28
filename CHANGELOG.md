@@ -19,6 +19,17 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-21.0.1'></a>
+## v21.0.1 (2026-01-28)
+
+- [Chore] Remove unnecessary hatch definition for version. (by @mlabeeb03)
+
+- [BugFix] Add correct EVENT_BUS_REDIS_CONNECTION_URL settings for event-bus. (by @Faraz32123)
+
+- [Bugfix] Add CELERY_BROKER_URL settings as celery tasks were failing due to empty celery broker url. (by @Faraz32123)
+
+- [Bugfix] Fix site configuration initialization by ensuring all sites have names before running create_or_update_site_configuration to prevent IntegrityError (by @CodeWithEmad)
+
 <a id='changelog-21.0.0'></a>
 ## v21.0.0 (2025-10-01)
 

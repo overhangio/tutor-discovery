@@ -1,1 +1,0 @@
-- [Bugfix] Fix site configuration initialization by ensuring all sites have names before running create_or_update_site_configuration to prevent IntegrityError (by @CodeWithEmad)
