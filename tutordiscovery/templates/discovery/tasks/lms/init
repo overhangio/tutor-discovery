@@ -58,6 +58,18 @@
     discovery-sso \
     discovery
 
+# There's a bug in Open edX where if you try to use create_or_update_site_configuration, if the site exists but doesn't
+# have the name, it fails. First let's ensure all sites have names.
+# The same approach is used in settheme command in tutor.
+./manage.py lms shell -c "
+from django.contrib.sites.models import Site
+name_max_length = Site._meta.get_field('name').max_length
+for site in Site.objects.filter(name=''):
+    site.name = site.domain[:name_max_length]
+    site.save()
+    print(f'Fixed site name for {site.domain}')
+"
+
 # The COURSE_CATALOG_API_URL used to be stored in a setting, but is now a site
 # configuration -- which means that it takes different values for different
 # sites. This is important because the programs and courses returned for each
