@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 ###### Minimal image with base system requirements for most stages
-FROM docker.io/ubuntu:22.04 AS minimal
+FROM docker.io/ubuntu:26.04 AS minimal
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
