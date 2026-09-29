@@ -61,9 +61,9 @@ EMAIL_HOST_PASSWORD = "{{ SMTP_PASSWORD }}"
 EMAIL_USE_TLS = {{ SMTP_USE_TLS }}
 
 # Get rid of the "local" handler
-LOGGING["handlers"].pop("local")
+LOGGING["handlers"].pop("local", None)
 for logger in LOGGING["loggers"].values():
-    if "local" in logger["handlers"]:
+    if "local" in logger.get("handlers", []):
         logger["handlers"].remove("local")
 # Decrease verbosity of algolia logger
 LOGGING["loggers"]["algoliasearch_django"] = {"level": "WARNING"}
