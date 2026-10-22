@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
-    apt install -y curl git-core gettext language-pack-en \
+    apt install -y ca-certificates curl git-core gettext language-pack-en \
     build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev \
     pkg-config libsqlite3-dev media-types mailcap libbz2-dev liblzma-dev
 ENV LC_ALL=en_US.UTF-8
@@ -47,12 +47,12 @@ RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     # https://pypi.org/project/setuptools/
     # https://pypi.org/project/pip/
     # https://pypi.org/project/wheel/
-    setuptools==80.0.0 pip==25.2 wheel==0.45.1
+    setuptools==80.0.0 pip==26.2.2 wheel==0.45.1
 
 # Install a recent version of nodejs
 RUN pip install nodeenv==1.9.1
 # nodejs version picked from https://github.com/openedx/course-discovery/blob/master/Dockerfile
-RUN nodeenv /openedx/nodeenv --node=16.14.2 --prebuilt
+RUN nodeenv /openedx/nodeenv --node=24.22.1 --prebuilt
 ENV PATH=/openedx/nodeenv/bin:${PATH}
 
 # Install python and nodejs requirements
@@ -60,6 +60,10 @@ ENV PATH=/openedx/nodeenv/bin:${PATH}
 # instructions to benefit from docker image caching
 # Install base requirements
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install -r requirements.txt
+
+# Upgrade certifi until the upstream requirements pin a version without the compromised emSign roots
+# https://emudhra.we-have-a-problem.com/
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install "certifi>=2026.10.19"
 {% for extra_requirement in DISCOVERY_EXTRA_PIP_REQUIREMENTS %}RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install '{{ extra_requirement }}'
 {% endfor %}
 
