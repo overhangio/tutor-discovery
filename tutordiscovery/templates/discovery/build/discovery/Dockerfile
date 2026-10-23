@@ -85,9 +85,10 @@ RUN atlas pull {{ patch("atlas-extra-args") }} translations/course-discovery/cou
 RUN python manage.py compilemessages
 {% endif %}
 
-# Collect static assets
+# Collect static assets. The webpack version used by course-discovery hashes with MD4,
+# which OpenSSL 3 (Node.js 17+) only provides through its legacy provider.
 COPY --chown=app:app assets.py ./course_discovery/settings/assets.py
-RUN DJANGO_SETTINGS_MODULE=course_discovery.settings.assets make static
+RUN DJANGO_SETTINGS_MODULE=course_discovery.settings.assets NODE_OPTIONS=--openssl-legacy-provider make static
 
 # Create media directory to serve media files
 RUN mkdir course_discovery/media
