@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt update && \
-    apt install -y curl git-core gettext language-pack-en \
+    apt install -y ca-certificates curl git-core gettext language-pack-en \
     build-essential libcairo2 libffi-dev libmysqlclient-dev libxml2-dev libxslt-dev libjpeg-dev libssl-dev \
     pkg-config libsqlite3-dev media-types mailcap libbz2-dev liblzma-dev
 ENV LC_ALL=en_US.UTF-8
@@ -47,12 +47,12 @@ RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install \
     # https://pypi.org/project/setuptools/
     # https://pypi.org/project/pip/
     # https://pypi.org/project/wheel/
-    setuptools==77.0.3 pip==25.0.1 wheel==0.45.1
+    setuptools==77.0.3 pip==26.2.2 wheel==0.45.1
 
 # Install a recent version of nodejs
 RUN pip install nodeenv==1.9.1
 # nodejs version picked from https://github.com/openedx/course-discovery/blob/master/Dockerfile
-RUN nodeenv /openedx/nodeenv --node=16.14.2 --prebuilt
+RUN nodeenv /openedx/nodeenv --node=22.23.4 --prebuilt
 ENV PATH=/openedx/nodeenv/bin:${PATH}
 
 # Install python and nodejs requirements
@@ -60,6 +60,10 @@ ENV PATH=/openedx/nodeenv/bin:${PATH}
 # instructions to benefit from docker image caching
 # Install base requirements
 RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install -r requirements.txt
+
+# Upgrade certifi until the upstream requirements pin a version without the compromised emSign roots
+# https://emudhra.we-have-a-problem.com/
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install "certifi>=2026.10.19"
 {% for extra_requirement in DISCOVERY_EXTRA_PIP_REQUIREMENTS %}RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared pip install '{{ extra_requirement }}'
 {% endfor %}
 
@@ -81,9 +85,10 @@ RUN atlas pull {{ patch("atlas-extra-args") }} translations/course-discovery/cou
 RUN python manage.py compilemessages
 {% endif %}
 
-# Collect static assets
+# Collect static assets. The webpack version used by course-discovery hashes with MD4,
+# which OpenSSL 3 (Node.js 17+) only provides through its legacy provider.
 COPY --chown=app:app assets.py ./course_discovery/settings/assets.py
-RUN DJANGO_SETTINGS_MODULE=course_discovery.settings.assets make static
+RUN DJANGO_SETTINGS_MODULE=course_discovery.settings.assets NODE_OPTIONS=--openssl-legacy-provider make static
 
 # Create media directory to serve media files
 RUN mkdir course_discovery/media
