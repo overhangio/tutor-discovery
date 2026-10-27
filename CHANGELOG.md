@@ -19,6 +19,15 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-22.0.1'></a>
+## v22.0.1 (2026-10-27)
+
+- [Chore] Remove redundant ENABLE_COURSE_DISCOVERY setting, already set by tutor core. (by @Faraz32123)
+
+- [Bugfix] Do not fail when the local logging handler does not exist. (by @Agrendalath)
+
+- [Security] Upgrade certifi, pip and Node.js (v24) in the Discovery image to stop trusting the compromised eMudhra/emSign CA certificates. See https://github.com/overhangio/tutor/issues/1515. (by @ahmed-arb)
+
 <a id='changelog-22.0.0'></a>
 ## v22.0.0 (2026-08-06)
 
