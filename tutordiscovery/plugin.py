@@ -55,6 +55,75 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
     },
 }
 
+# Create the discovery users and OAuth2 applications in the LMS
+tutor_hooks.Filters.OPENEDX_SERVICE_USERS.add_items(
+    [
+        {
+            "username": "discovery",
+            "staff": True,
+            "superuser": True,
+            "unusable_password": True,
+        },
+        {
+            "username": "lms_catalog_service_user",
+            "staff": True,
+            "unusable_password": True,
+        },
+    ]
+)
+tutor_hooks.Filters.OPENEDX_OAUTH2_APPLICATIONS.add_items(
+    [
+        # Development clients
+        {
+            "name": "discovery-dev",
+            "user": "discovery",
+            "grant_type": "client-credentials",
+            "redirect_uris": "http://{{ DISCOVERY_HOST }}:8381/complete/edx-oauth2/",
+            "client_id": "{{ DISCOVERY_OAUTH2_KEY_DEV }}",
+            "client_secret": "{{ DISCOVERY_OAUTH2_SECRET }}",
+            "scopes": "user_id",
+            "skip_authorization": True,
+        },
+        {
+            "name": "discovery-sso-dev",
+            "user": "discovery",
+            "grant_type": "authorization-code",
+            "redirect_uris": "http://{{ DISCOVERY_HOST }}:8381/complete/edx-oauth2/",
+            "client_id": "{{ DISCOVERY_OAUTH2_KEY_SSO_DEV }}",
+            "client_secret": "{{ DISCOVERY_OAUTH2_SECRET_SSO }}",
+            "scopes": "user_id",
+            "skip_authorization": True,
+        },
+        # Production clients
+        {
+            "name": "discovery",
+            "user": "discovery",
+            "grant_type": "client-credentials",
+            "redirect_uris": (
+                "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}"
+                "://{{ DISCOVERY_HOST }}/complete/edx-oauth2/"
+            ),
+            "client_id": "{{ DISCOVERY_OAUTH2_KEY }}",
+            "client_secret": "{{ DISCOVERY_OAUTH2_SECRET }}",
+            "scopes": "user_id",
+            "skip_authorization": True,
+        },
+        {
+            "name": "discovery-sso",
+            "user": "discovery",
+            "grant_type": "authorization-code",
+            "redirect_uris": (
+                "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}"
+                "://{{ DISCOVERY_HOST }}/complete/edx-oauth2/"
+            ),
+            "client_id": "{{ DISCOVERY_OAUTH2_KEY_SSO }}",
+            "client_secret": "{{ DISCOVERY_OAUTH2_SECRET_SSO }}",
+            "scopes": "user_id",
+            "skip_authorization": True,
+        },
+    ]
+)
+
 # Initialization tasks
 init_tasks = ("mysql", "lms", "discovery")
 for service in init_tasks:
