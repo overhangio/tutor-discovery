@@ -101,9 +101,9 @@ EDX_DRF_EXTENSIONS = {
 
 # edx-event-bus-redis settings
 EVENT_BUS_PRODUCER = 'edx_event_bus_redis.create_producer'
-EVENT_BUS_REDIS_CONNECTION_URL = 'redis://@redis:6379/'
+EVENT_BUS_REDIS_CONNECTION_URL = "redis://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/"
 EVENT_BUS_TOPIC_PREFIX = 'dev'
 EVENT_BUS_CONSUMER = 'edx_event_bus_redis.RedisEventConsumer'
-CELERY_BROKER_URL = 'redis://redis:6379/'
+CELERY_BROKER_URL = "redis://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}@{% endif %}{{ REDIS_HOST }}:{{ REDIS_PORT }}/"
 
 {{ patch("discovery-common-settings") }}
